@@ -31,4 +31,8 @@ public class Candidate implements  IRepresentative {
     public String getParty() {
         return null;
     }
+
+    public String getCandidateName() {
+       return this.candidateName;
+    }
 }

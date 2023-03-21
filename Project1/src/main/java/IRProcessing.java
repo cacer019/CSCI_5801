@@ -15,4 +15,7 @@ public class IRProcessing implements IElectionProcessing {
     public String[] getParties() {
         return new String[0];
     }
+
+    //public determineLoser()
+
 }

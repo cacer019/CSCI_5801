@@ -1,8 +1,10 @@
-public class CPLProcessing implements IBallotProcessing {
+import java.io.BufferedReader;
+
+public class CPLProcessing implements IElectionProcessing {
 
     private Party[] parties;
 
-    private void distributeSeats(String filename) {
+    private void distributeSeats(BufferedReader br) {
 
     }
 
@@ -10,18 +12,18 @@ public class CPLProcessing implements IBallotProcessing {
 
     }
 
-    private void distributeBallots(String fileName, party[] parties) {
+    private void distributeBallots(BufferedReader br, party[] parties) {
 
     }
-
-    public boolean processElection(String fileName, ProcessResults results) {
+    @Override
+    public boolean processElection(BufferedReader br) {
 
     }
-
+    @Override
     public String[] getCandidates() {
 
     }
-
+    @Override
     public String[] getParties() {
 
     }

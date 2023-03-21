@@ -10,13 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class main {
-<<<<<<< Updated upstream
 
-    public static void main(String[] args) {
-        
-    }
-
-=======
     public static void main(String[] args) throws IOException {
         System.out.println("------MAIN INITIALIZED------");
         Boolean checkReturn;
@@ -78,5 +72,5 @@ public class main {
 //    private static String getElectionType(Scanner sc) {
 //
 //    }
->>>>>>> Stashed changes
+
 }

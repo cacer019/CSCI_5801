@@ -17,6 +17,21 @@ public class IRProcessing implements IElectionProcessing {
         return false;
     }
 
+    @Override
+    public String[] getCandidates() {
+        //loops through candidates and adds their names to a String array
+        String[] candStrings = new String[candidates.size()];
+        for(int i = 0; i < candidates.size(); i++){
+            candStrings[i] = candidates.get(i).getCandidateName();
+        }
+        return candStrings;
+    }
+
+    @Override
+    public String[] getParties() {
+        return new String[0];
+    }
+
     private void setCandidates(BufferedReader br) {
         //Read the second line (candidates
         String curLine = br.readLine();
@@ -69,16 +84,53 @@ public class IRProcessing implements IElectionProcessing {
         }
     }
 
-    @Override
-    public String[] getCandidates() {
-        return new String[0];
+
+
+    public Candidate determineLoser() {
+        int minVotes = Integer.MAX_VALUE;
+        int tempVotes;
+        ArrayList<Candidate> loserCandidates = new ArrayList<Candidate>();
+
+        for (Candidate candidate : candidates) {
+            tempVotes = candidate.getBallotCount();
+            if(tempVotes < minVotes){       //if candidate has less votes than current min, clear list and add them
+                minVotes = tempVotes;
+                loserCandidates.clear();
+                loserCandidates.add(candidate);
+            }
+            else if(tempVotes == minVotes){     //if candidate has same votes as current min, add them
+                loserCandidates.add(candidate);
+            }
+        }
+
+        //if only one min candidate, return them, else randomly choose loser
+        if(loserCandidates.size() == 1){
+            return loserCandidates.get(0);
+        }
+        else{
+            return loserCandidates.get((int)(Math.random()*loserCandidates.size()));
+            /*
+            (int)(Math.random()*loserCandidates.size()) gets random int from 0 to
+            the number of loserCandidates-1 to randomly choose loser
+            */
+        }
+
     }
 
-    @Override
-    public String[] getParties() {
-        return new String[0];
+
+    public void redistributeBallots(Candidate cand){
+        String nextCand;
+
+        for(Ballot curBall: cand.getBallots()){
+            curBall.updateBallot(); //update ballot
+            nextCand = curBall.getNextCandidate();  //get candidate to redistribute to
+            for(Candidate curCand: candidates){     //find candidate to redistribute to
+                if(curCand.getCandidateName().equals(nextCand)){
+                    curCand.addBallot(curBall);     //redistribute to candidate
+                }
+            }
+        }
     }
 
-    //public determineLoser()
 
 }

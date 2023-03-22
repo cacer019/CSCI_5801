@@ -4,7 +4,7 @@ public class Party implements IRepresentative {
     private int numSeats;
     private String partyName;
 
-    public void Party(String party, String[] candidateList) {
+    public Party(String party, String[] candidateList) {
         partyName = party;
         candidates = candidateList;
     };

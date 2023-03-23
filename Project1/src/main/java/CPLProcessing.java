@@ -29,6 +29,7 @@ public class CPLProcessing implements IElectionProcessing {
     private void distributeBallots(BufferedReader br, Party[] parties) {
 
         // Determine where total ballot # is located
+        // guaranteed lines are CPL identifier, # of parties, Parties, # of seats, and candidates
         int ballotNumLine = 5 + parties.length;
 
         // Skip to line before # of ballots are located in file using int lineSkip
@@ -39,36 +40,42 @@ public class CPLProcessing implements IElectionProcessing {
         // Step into line with ballot # & Store # of ballots
         int totalBallots = parseInt(br.readlineI());
 
-        // create array of ints, each position will refer to the # of ballots for the corresponding party
+        // Create array of ints, each position will refer to the # of ballots for the corresponding party
         int[] partyBallots = [parties.length];
 
-        // set all ballot counts to 0
+        // Set all ballot counts to 0
         for(int i = 0; i < parties.length; i++){
             partyBallots[i] = 0;
         }
 
-        // iterate through each line and look for ballot vote position
+        // Iterate through each line and look for ballot vote position
         for(int i = 0; i < totalBallots; i++){
 
-            //go char by char in line and add to corresponding party index
+            // Go char by char in line and add to corresponding party index
+            // All ballots have the the amount of characters as there are parties
             for(int j = 0; j < parties.length; j++){
 
                 char current = br.read();
 
-                //skip if comma
-                if(current == ','){
-                    continue;
-                }
+                // Check to see if valid read and not the end of line
+                while(a != -1){
 
-                //increment when 1 is found
-                else if(current == '1'){
-                    partyBallots[j] += 1;
-                }
+                    if(a == ','){
+                        continue;
+                    }
 
+                    else if(a == '1'){
+                        partyBallots[j] += 1;
+                    }
+                }
             }
-
         }
 
+        // Update every Party object's ballotCount attribute to its distributed value
+        for(int i = 0; int i < parties.length; i++){
+            // I think we might need setter method for Party objects ballots due to info being private? Not sure myself.
+            parties[i].ballotCount = partyBallots[i];
+        }
 
 
 

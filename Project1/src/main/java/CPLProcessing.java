@@ -28,6 +28,50 @@ public class CPLProcessing implements IElectionProcessing {
 
     private void distributeBallots(BufferedReader br, Party[] parties) {
 
+        // Determine where total ballot # is located
+        int ballotNumLine = 5 + parties.length;
+
+        // Skip to line before # of ballots are located in file using int lineSkip
+        for(int i = 0; i < ballotNumLine; i++){
+            br.readline();
+        }
+
+        // Step into line with ballot # & Store # of ballots
+        int totalBallots = parseInt(br.readlineI());
+
+        // create array of ints, each position will refer to the # of ballots for the corresponding party
+        int[] partyBallots = [parties.length];
+
+        // set all ballot counts to 0
+        for(int i = 0; i < parties.length; i++){
+            partyBallots[i] = 0;
+        }
+
+        // iterate through each line and look for ballot vote position
+        for(int i = 0; i < totalBallots; i++){
+
+            //go char by char in line and add to corresponding party index
+            for(int j = 0; j < parties.length; j++){
+
+                char current = br.read();
+
+                //skip if comma
+                if(current == ','){
+                    continue;
+                }
+
+                //increment when 1 is found
+                else if(current == '1'){
+                    partyBallots[j] += 1;
+                }
+
+            }
+
+        }
+
+
+
+
     }
     @Override
     public boolean processElection(BufferedReader br) {

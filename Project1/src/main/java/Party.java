@@ -7,8 +7,8 @@ public class Party implements IRepresentative {
     private int ballotCount;
 
     public Party(String party, ArrayList<String> candidateList) {
-        partyName = party;
-        candidates = candidateList;
+        this.partyName = party;
+        this.candidates = candidateList;
     };
 
     public void addCandidate(String candidateName) {
@@ -20,16 +20,16 @@ public class Party implements IRepresentative {
     }
 
     public ArrayList<String> getCandidate() {
-        return candidates;
+        return this.candidates;
     }
 
     @Override
     public int getBallotCount() {
-        return ballotCount;
+        return this.ballotCount;
     }
 
     @Override
     public String getParty() {
-        return partyName;
+        return this.partyName;
     }
 }

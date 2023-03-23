@@ -1,47 +1,35 @@
+import java.util.ArrayList;
 public class Party implements IRepresentative {
 
-    private String[] candidates;
+    private ArrayList<String> candidates;
     private int numSeats;
     private String partyName;
+    private int ballotCount;
 
-    public Party(String party, String[] candidateList) {
+    public Party(String party, ArrayList<String> candidateList) {
         partyName = party;
         candidates = candidateList;
     };
 
     public void addCandidate(String candidateName) {
-        int n = candidates.length;
-        String[] newCandidates = new String[n+1];
-        for (int i = 0; i < n; i++) {
-            newCandidates[i] = candidates[i];
-        }
-        newCandidates[n] = candidateName;
-        candidates = newCandidates;
+        candidates.add(candidateName);
     }
 
     public void removeCandidate(String candidateToRemove) {
-        int n = candidates.length;
-        String newCandidates[] = new String[n - 1];
-        for (int i = 0, k = 0; i < n; i++) {
-            if (candidates[i] != candidateToRemove) {
-                newCandidates[k] = candidates[i];
-                k++;
-            }
-        }
-        candidates = newCandidates;
+        candidates.remove(candidateToRemove);
     }
 
-    public String[] getCandidate() {
+    public ArrayList<String> getCandidate() {
         return candidates;
     }
 
     @Override
     public int getBallotCount() {
-        return 0;
+        return ballotCount;
     }
 
     @Override
     public String getParty() {
-        return null;
+        return partyName;
     }
 }

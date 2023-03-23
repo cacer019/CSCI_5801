@@ -12,7 +12,6 @@ public class CPLProcessing implements IElectionProcessing {
     }
 
     private void setParties(BufferedReader br) throws IOException {
-        ArrayList<Party> listOfParties = new ArrayList<>();
         // Gets number if parties (2nd Line)
         int numParties = Integer.parseInt(br.readLine());
         // Gets list of party names (3rd line)
@@ -23,9 +22,8 @@ public class CPLProcessing implements IElectionProcessing {
             curLine = br.readLine();
             ArrayList<String> candidatesOfParty = new ArrayList<>(Arrays.asList(curLine.split(";")));
             Party party = new Party(partyNames[i], candidatesOfParty);
-            listOfParties.add(party);
+            this.parties.add(party);
         }
-        this.parties = listOfParties;
     }
 
     private void distributeBallots(BufferedReader br, Party[] parties) {

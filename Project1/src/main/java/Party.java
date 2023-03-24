@@ -23,6 +23,14 @@ public class Party implements IRepresentative {
         return this.candidates;
     }
 
+    public int getNumSeats() {
+        return numSeats;
+    }
+
+    public void setNumSeats(int seats) {
+        this.numSeats = seats;
+    }
+
     @Override
     public int getBallotCount() {
         return this.ballotCount;

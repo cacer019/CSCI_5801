@@ -16,21 +16,23 @@ public class Candidate implements  IRepresentative {
 
     public void removeBallot(int index) {
        ballots.remove(index);
+       this.ballotCount--;
     }
 
     public void addBallot(Ballot nextBallot) {
-       ballots.add(nextBallot);
+       this.ballots.add(nextBallot);
+       this.ballotCount++;
     }
 
     @Override
-    public int getBallotCount() {
-        return 0;
-    }
+    public int getBallotCount() { return this.ballotCount; }
 
     @Override
     public String getParty() {
-        return null;
+        return this.partyName;
     }
+
+    public ArrayList<Ballot> getBallots() { return this.ballots; }
 
     public String getCandidateName() {
        return this.candidateName;

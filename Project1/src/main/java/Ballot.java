@@ -1,8 +1,8 @@
 
 import java.util.ArrayList;
 public class Ballot {
-    private int ballotIndex;
-    private int numRankings;
+    private int ballotIndex;  //starts at 0
+    private int numRankings; //will always start with at least 1
     //private rankings
     private ArrayList<String> candidates;
     public Ballot(int ballotIndex, int numRankings, ArrayList<String> candidates) {
@@ -20,8 +20,13 @@ public class Ballot {
         return ballotIndex;
     }
 
-    public void updateBallot() {
+    public boolean updateBallot() {
         candidates.remove(0);
+        this.numRankings--;
+        if (this.numRankings >= 0) {
+            return false;
+        }
+        else return true;
     }
 
 }

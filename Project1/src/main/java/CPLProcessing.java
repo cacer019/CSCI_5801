@@ -29,7 +29,7 @@ public class CPLProcessing implements IElectionProcessing {
     private void distributeBallots(BufferedReader br, Party[] parties) {
 
         // Determine where total ballot # is located
-        // guaranteed lines are CPL identifier, # of parties, Parties, # of seats, and candidates
+        // Guaranteed lines are CPL identifier, # of parties, Parties, # of seats, and candidates
         int ballotNumLine = 5 + parties.length;
 
         // Skip to line before # of ballots are located in file using int lineSkip
@@ -40,45 +40,27 @@ public class CPLProcessing implements IElectionProcessing {
         // Step into line with ballot # & Store # of ballots
         int totalBallots = parseInt(br.readlineI());
 
-        // Create array of ints, each position will refer to the # of ballots for the corresponding party
-        int[] partyBallots = [parties.length];
-
-        // Set all ballot counts to 0
-        for(int i = 0; i < parties.length; i++){
-            partyBallots[i] = 0;
-        }
-
         // Iterate through each line and look for ballot vote position
         for(int i = 0; i < totalBallots; i++){
 
-            // Go char by char in line and add to corresponding party index
-            // All ballots have the the amount of characters as there are parties
-            for(int j = 0; j < parties.length; j++){
+            // Go char by char for each ballot make string 1st
+            String currentBallot = br.readline();
+            // Convert Ballot string into char array
+            char[] ballotArray = currentBallot.toCharArray();
 
-                char current = br.read();
+            // Iterate through the char array and distribute ballot
+            for(int j = 0; j < ballotArray.length; j++){
 
-                // Check to see if valid read and not the end of line
-                while(a != -1){
+                if(ballotArray[j] == ','){
+                    continue;
+                }
 
-                    if(a == ','){
-                        continue;
-                    }
-
-                    else if(a == '1'){
-                        partyBallots[j] += 1;
-                    }
+                else if(ballotArray[j] == '1'){
+                    // Unsure here if we can do this, maybe we create setter in Party class to set ballot count
+                    parties[j].ballotCount += 1;
                 }
             }
         }
-
-        // Update every Party object's ballotCount attribute to its distributed value
-        for(int i = 0; int i < parties.length; i++){
-            // I think we might need setter method for Party objects ballots due to info being private? Not sure myself.
-            parties[i].ballotCount = partyBallots[i];
-        }
-
-
-
     }
     @Override
     public boolean processElection(BufferedReader br) {

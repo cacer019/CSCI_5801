@@ -12,11 +12,11 @@ public class Party implements IRepresentative {
     };
 
     public void addCandidate(String candidateName) {
-        candidates.add(candidateName);
+        this.candidates.add(candidateName);
     }
 
     public void removeCandidate(String candidateToRemove) {
-        candidates.remove(candidateToRemove);
+        this.candidates.remove(candidateToRemove);
     }
 
     public ArrayList<String> getCandidate() {
@@ -24,7 +24,7 @@ public class Party implements IRepresentative {
     }
 
     public int getNumSeats() {
-        return numSeats;
+        return this.numSeats;
     }
 
     public void setNumSeats(int seats) {

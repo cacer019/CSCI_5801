@@ -12,6 +12,7 @@ public class Candidate implements  IRepresentative {
    public Candidate(String partyName, String candidateName) {
        this.partyName = partyName;
        this.candidateName = candidateName;
+       this.ballots = new ArrayList<>();
    }
 
     public void removeBallot(int index) {

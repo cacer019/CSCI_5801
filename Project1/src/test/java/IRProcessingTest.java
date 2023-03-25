@@ -2,6 +2,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +31,13 @@ class IRProcessingTest {
         assertEquals("Kleinberg", cands[1]);
         assertEquals("Chou", cands[2]);
         assertEquals("Royce", cands[3]);
+
+        ArrayList<Candidate> curCandsArray = election.getCandidateArray();
+        assertEquals(curCandsArray.get(0).getCandidateName(), "Rosen");
+        assertEquals(curCandsArray.get(2).getCandidateName(), "Chou");
+        assertEquals(curCandsArray.get(0).getBallotCount(), 5);
+        assertEquals(curCandsArray.get(2).getBallotCount(), 1);
+
     }
 //
 //    @Test

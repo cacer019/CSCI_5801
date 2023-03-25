@@ -11,18 +11,15 @@ public class IRProcessing implements IElectionProcessing {
     public IRProcessing(BufferedReader br) {
         candidates = new ArrayList<>();
         setCandidates(br);
-    }
-
-    @Override
-    public boolean processElection(BufferedReader br) {
-        candidates = new ArrayList<>();
-        setCandidates(br);
         try {
             distributeBallots(br);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Override
+    public boolean processElection(BufferedReader br) {
         while(candidates.size() > 0) {
             for (Candidate curCand : candidates) {
                 //check if there is a winner with a majority number of ballots
@@ -48,6 +45,10 @@ public class IRProcessing implements IElectionProcessing {
             candStrings[i] = candidates.get(i).getCandidateName();
         }
         return candStrings;
+    }
+
+    public ArrayList<Candidate> getCandidateArray() {
+        return candidates;
     }
 
     @Override
@@ -88,8 +89,10 @@ public class IRProcessing implements IElectionProcessing {
 
     private void distributeBallots(BufferedReader br) throws IOException {
         //Get the 4th line of the CSV file
-        int ballotCount = Integer.parseInt(br.readLine());
+        String nextLine = br.readLine();
+        int ballotCount = Integer.parseInt(nextLine);
         int ballotIndex = 0;
+        System.out.println("Read: " + ballotCount);
 
         //Loop through all the lines to create each individual ballot, O(2) time
         for(int i = 0; i < ballotCount; i++) {
@@ -101,12 +104,18 @@ public class IRProcessing implements IElectionProcessing {
             for(int y = 0; y < ballotRankings.length; y++) {
                 //Get candidates name for current position, if ranked add the candidates name
                 //into that position in the rankings accordingly
-                String candidateName = candidates.get(y).getCandidateName();
-                tempRankings.add(y, candidateName);
-                //Increment the num rankings
-                curNumRankings++;
+                if(ballotRankings[y] != "") {
+                    int curRanking = Integer.parseInt(ballotRankings[y]);
+                    String candidateName = candidates.get(curRanking - 1).getCandidateName();
+                    System.out.println("added: " + candidateName);
+                    tempRankings.add(candidateName);
+                    //Increment the num rankings
+                    curNumRankings++;
+                }
             }
             //Create the new ballot
+            System.out.println("ballotIndex: " + ballotIndex);
+            System.out.println("curNumRankings: " + curNumRankings);
             Ballot tempBallot = new Ballot(ballotIndex, curNumRankings, tempRankings);
             //Need to add this Ballot to it's first choice's Ballots
             String candidateToFind = tempBallot.getNextCandidate();

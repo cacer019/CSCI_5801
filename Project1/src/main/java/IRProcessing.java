@@ -8,6 +8,11 @@ public class IRProcessing implements IElectionProcessing {
     private static ArrayList<Candidate> candidates;
     int totalNumBallots = 0;
 
+    public IRProcessing(BufferedReader br) {
+        candidates = new ArrayList<>();
+        setCandidates(br);
+    }
+
     @Override
     public boolean processElection(BufferedReader br) {
         candidates = new ArrayList<>();
@@ -54,19 +59,28 @@ public class IRProcessing implements IElectionProcessing {
         //Read the second line (candidates
         String curLine;
         try {
+            //read the number of candidates, then the names
+            br.readLine();
             curLine = br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        //need to remove all whitespaces
+        curLine = curLine.replaceAll("\\s+","");
+        //System.out.println("curline: " + curLine);  //debugging
         String[] candNames = curLine.split(",");
         for (String curCandName : candNames) {
             //Split name from party
-            String[] candData = curCandName.split(" ");
+            //System.out.println("curCandName: " + curCandName);  //debugging
+            String[] candData = curCandName.split("\\(");
+            //System.out.println("cand0: " + candData[0]);  //debugging
+            //System.out.println("cand1: " + candData[1]);  //debugging
             //Remove parenthesis around party
-            String fixedPartyName = candData[1].replace("(", "");
-            fixedPartyName = fixedPartyName.replace(")", "");
+            String fixedPartyName = candData[1].replace(")", "");
             //Make a new candidate
-            Candidate newCand = new Candidate(candData[0], fixedPartyName);
+            //System.out.println("party: " +fixedPartyName);  //debugging
+            //System.out.println("name: " + candData[0]);  //debugging
+            Candidate newCand = new Candidate(fixedPartyName, candData[0]);
             //Add new Candidate object into class variable candidates
             candidates.add(newCand);
         }

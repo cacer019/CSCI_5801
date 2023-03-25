@@ -1,0 +1,25 @@
+1curline: Rosen(D),Kleinberg(R),Chou(I),Royce(L)
+curCandName: Rosen(D)
+cand0: Rosen
+cand1: D)
+
+party: D
+name: Rosen
+curCandName: Kleinberg(R)
+cand0: Kleinberg
+cand1: R)
+
+party: R
+name: Kleinberg
+curCandName: Chou(I)
+cand0: Chou
+cand1: I)
+
+party: I
+name: Chou
+curCandName: Royce(L)
+cand0: Royce
+cand1: L)
+
+party: L
+name: Royce

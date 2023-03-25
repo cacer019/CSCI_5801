@@ -1,21 +1,46 @@
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IRProcessingTest {
 
-    Ballot temp1 = new Ballot(0, 0, null);
-    Ballot temp2 = new Ballot(0, 0, null);
-    @Test
-    void processElection() {
-        assertEquals( temp1, temp2);
-
-    }
+    BufferedReader br;
 
     @Test
-    void getCandidates() {
-        assertEquals( 1, 1);
+    void processElection() throws FileNotFoundException {
+        //Simulate main giving a br to IRProcessing
+//        File file = new File(".");
+//        for(String fileNames : file.list()) System.out.println(fileNames);
+        FileReader csvFile = new FileReader("src/test/java/IRTesting1.csv");
+
+        br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        IRProcessing election = new IRProcessing(br);
+
+        String[] cands = election.getCandidates();
+        assertEquals("Rosen", cands[0]);
+        assertEquals("Kleinberg", cands[1]);
+        assertEquals("Chou", cands[2]);
+        assertEquals("Royce", cands[3]);
     }
+//
+//    @Test
+//    void setCandidates() {
+//
+//    }
+//
+//    @Test
+//    void getCandidates() {
+//
+//    }
 //
 //    @Test
 //    void getParties() {
@@ -27,5 +52,6 @@ class IRProcessingTest {
 //
 //    @Test
 //    void redistributeBallots() {
+//
 //    }
 }

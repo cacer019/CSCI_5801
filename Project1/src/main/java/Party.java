@@ -36,6 +36,10 @@ public class Party implements IRepresentative {
         return this.ballotCount;
     }
 
+    public void setBallotCount(int numBallots) {
+        this.ballotCount = numBallots;
+    }
+
     @Override
     public String getParty() {
         return this.partyName;

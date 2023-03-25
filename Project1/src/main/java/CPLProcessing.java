@@ -63,7 +63,7 @@ public class CPLProcessing implements IElectionProcessing {
         }
     }
 
-    private void distributeBallots(BufferedReader br, Party[] parties) {
+    private void distributeBallots(BufferedReader br, Party[] parties) throws IOException {
 
         // Determine where total ballot # is located
         // Guaranteed lines are CPL identifier, # of parties, Parties, # of seats, and candidates
@@ -71,17 +71,17 @@ public class CPLProcessing implements IElectionProcessing {
 
         // Skip to line before # of ballots are located in file using int lineSkip
         for(int i = 0; i < ballotNumLine; i++){
-            br.readline();
+            br.readLine();
         }
 
         // Step into line with ballot # & Store # of ballots
-        int totalBallots = parseInt(br.readlineI());
+        int totalBallots = Integer.parseInt(br.readLine());
 
         // Iterate through each line and look for ballot vote position
         for(int i = 0; i < totalBallots; i++){
 
             // Go char by char for each ballot make string 1st
-            String currentBallot = br.readline();
+            String currentBallot = br.readLine();
             // Convert Ballot string into char array
             char[] ballotArray = currentBallot.toCharArray();
 
@@ -94,7 +94,7 @@ public class CPLProcessing implements IElectionProcessing {
 
                 else if(ballotArray[j] == '1'){
                     // Unsure here if we can do this, maybe we create setter in Party class to set ballot count
-                    parties[j].ballotCount += 1;
+                    parties[j].setBallotCount(parties[j].getBallotCount() + 1);
                 }
             }
         }

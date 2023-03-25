@@ -7,7 +7,7 @@ public class Ballot {
     private ArrayList<String> candidates;
     public Ballot(int ballotIndex, int numRankings, ArrayList<String> candidates) {
         this.ballotIndex = ballotIndex;
-        this.numRankings = ballotIndex;
+        this.numRankings = numRankings;
         this.candidates = candidates;
         //TODO: rankings replaced by curCandidate?
     }
@@ -21,12 +21,16 @@ public class Ballot {
     }
 
     public boolean updateBallot() {
-        candidates.remove(0);
-        this.numRankings--;
-        if (this.numRankings >= 0) {
+        if (this.numRankings <= 0) {
             return false;
         }
-        else return true;
+        candidates.remove(0);
+        this.numRankings--;
+        return true;
+    }
+
+    public int getNumRankings() {
+        return numRankings;
     }
 
 }

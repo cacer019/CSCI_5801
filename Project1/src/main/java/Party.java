@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+
 public class Party implements IRepresentative {
 
     private ArrayList<String> candidates;
@@ -19,7 +20,7 @@ public class Party implements IRepresentative {
         this.candidates.remove(candidateToRemove);
     }
 
-    public ArrayList<String> getCandidate() {
+    public ArrayList<String> getCandidates() {
         return this.candidates;
     }
 

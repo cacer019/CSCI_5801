@@ -1,29 +1,42 @@
-	Read: 6
-added: Rosen
-added: Chou
-added: Royce
-added: Kleinberg
-ballotIndex: 0
-curNumRankings: 4
-added: Rosen
-added: Kleinberg
-ballotIndex: 1
-curNumRankings: 2
-added: Rosen
-added: Kleinberg
-added: Chou
-ballotIndex: 2
-curNumRankings: 3
-added: Chou
-added: Kleinberg
-added: Rosen
-added: Royce
-ballotIndex: 3
-curNumRankings: 4
-added: Rosen
-added: Kleinberg
-ballotIndex: 4
-curNumRankings: 2
-added: Rosen
-ballotIndex: 5
-curNumRankings: 1
+totalnumballots: 6
+curcandcunt -> Rosen: 5
+#----------WINNER: Rosen----------
+totalnumballots: 6
+curcandcunt -> Rosen: 5
+#----------WINNER: Rosen----------
+totalnumballots: 10
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+curcandcunt -> Royce: 1
+curcandcunt -> Joe: 1
+TIERoyceJoe
+ballot 9 : 2
+removed candidate: Royce
+totalnumballots: 10
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+curcandcunt -> Joe: 2
+TIEChouJoe
+ballot 5 : 1
+REMOVED A BALLOT
+ballot 9 : 1
+REMOVED A BALLOT
+removed candidate: Joe
+totalnumballots: 8
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+ballot 2 : 3
+ballot 8 : 1
+REMOVED A BALLOT
+removed candidate: Chou
+totalnumballots: 7
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 4
+'----------WINNER: Kleinberg----------
+totalnumballots: 7
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 4
+'----------WINNER: Kleinberg----------

@@ -21,11 +21,11 @@ public class Ballot {
     }
 
     public boolean updateBallot() {
+        candidates.remove(0);
+        this.numRankings--;
         if (this.numRankings <= 0) {
             return false;
         }
-        candidates.remove(0);
-        this.numRankings--;
         return true;
     }
 

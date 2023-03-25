@@ -16,16 +16,20 @@ public class IRProcessing implements IElectionProcessing {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        processElection();
     }
 
     @Override
-    public boolean processElection(BufferedReader br) {
+    public String processElection() {
         while(candidates.size() > 0) {
+            System.out.println("totalnumballots: " + totalNumBallots);
             for (Candidate curCand : candidates) {
                 //check if there is a winner with a majority number of ballots
+                System.out.println("curcandcunt -> " + curCand.getCandidateName() + ": " + curCand.getBallotCount());
                 if (curCand.getBallotCount() > (totalNumBallots * 0.5)) {
                     //winner is candidate
-                    return true;
+                    System.out.println("----------WINNER: " + curCand.getCandidateName() + "----------");
+                    return curCand.getCandidateName();
                 }
                 //do not need to account for the possibility of a two-way tie, handled in determineLoser
             }
@@ -34,7 +38,16 @@ public class IRProcessing implements IElectionProcessing {
             //redistributeBallots accordingly, removes losing candidate
             redistributeBallots(loser);
         }
-        return false;
+        return "FAILURE";
+    }
+
+    @Override
+    public String[] getParties() {
+        String[] partyStrings = new String[candidates.size()];
+        for(int i = 0; i < candidates.size(); i++){
+            partyStrings[i] = candidates.get(i).getParty();
+        }
+        return partyStrings;
     }
 
     @Override
@@ -51,10 +64,6 @@ public class IRProcessing implements IElectionProcessing {
         return candidates;
     }
 
-    @Override
-    public String[] getParties() {
-        return new String[0];
-    }
 
     private void setCandidates(BufferedReader br) {
         //Read the second line (candidates
@@ -92,7 +101,7 @@ public class IRProcessing implements IElectionProcessing {
         String nextLine = br.readLine();
         int ballotCount = Integer.parseInt(nextLine);
         int ballotIndex = 0;
-        System.out.println("Read: " + ballotCount);
+        //System.out.println("Read: " + ballotCount);  //debugging
 
         //Loop through all the lines to create each individual ballot, O(2) time
         for(int i = 0; i < ballotCount; i++) {
@@ -107,15 +116,15 @@ public class IRProcessing implements IElectionProcessing {
                 if(ballotRankings[y] != "") {
                     int curRanking = Integer.parseInt(ballotRankings[y]);
                     String candidateName = candidates.get(curRanking - 1).getCandidateName();
-                    System.out.println("added: " + candidateName);
+                    //System.out.println("added: " + candidateName);  //debugging
                     tempRankings.add(candidateName);
                     //Increment the num rankings
                     curNumRankings++;
                 }
             }
             //Create the new ballot
-            System.out.println("ballotIndex: " + ballotIndex);
-            System.out.println("curNumRankings: " + curNumRankings);
+            //System.out.println("ballotIndex: " + ballotIndex);  //debugging
+            //System.out.println("curNumRankings: " + curNumRankings);  //debugging
             Ballot tempBallot = new Ballot(ballotIndex, curNumRankings, tempRankings);
             //Need to add this Ballot to it's first choice's Ballots
             String candidateToFind = tempBallot.getNextCandidate();
@@ -157,6 +166,7 @@ public class IRProcessing implements IElectionProcessing {
         else {
             //the idea here is that there can be multiple losers tied, but only one is randomly chosen as the loser
             //gets random int from 0 to number of possible losers
+            System.out.println("TIE" + loserCandidates.get(0).getCandidateName() + loserCandidates.get(1).getCandidateName());
             int randIndex = (int)(Math.random() * loserCandidates.size());
             return loserCandidates.get(randIndex);
         }
@@ -169,25 +179,50 @@ public class IRProcessing implements IElectionProcessing {
         //nextCand is used in for each loop
         String nextCand;
         for(Ballot curBallot: cand.getBallots()) {
+            System.out.println("ballot " + curBallot.getIndex() + " : " + curBallot.getNumRankings());
             boolean updateBallotResult = curBallot.updateBallot(); //update ballot
             if (!updateBallotResult) {  //if false is returned, delete this ballot (no more rankings)
                 //TODO: use getIndex() for audit file
                 //remove this ballot by ignoring it, once this candidate is deleted
                 //the ballots are destroyed by the garbage collector
+                System.out.println("REMOVED A BALLOT");
                 totalNumBallots--;
             }
             else {
-                nextCand = curBallot.getNextCandidate();  //get candidate to redistribute to
-                for (Candidate curCand : candidates) {     //find candidate to redistribute to
-                    if (curCand.getCandidateName().equals(nextCand)) {
-                        //redistribute to candidate; addBallot() updates Candidate BallotCount
-                        curCand.addBallot(curBallot);
+                //TODO: check new candidate exists or update again
+                Boolean checkIfCandExists = false;
+                outer: while(checkIfCandExists == false) {
+                    for (Candidate curCand : candidates) {
+                        if (curBallot.getNextCandidate() == curCand.getCandidateName()) {
+                            checkIfCandExists = true;
+                            break outer;
+                        }
+                    }
+                    updateBallotResult = curBallot.updateBallot();
+                    if (!updateBallotResult) {  //if false is returned, delete this ballot (no more rankings)
+                        //TODO: use getIndex() for audit file
+                        //remove this ballot by ignoring it, once this candidate is deleted
+                        //the ballots are destroyed by the garbage collector
+                        System.out.println("REMOVED A BALLOT - 2");
+                        totalNumBallots--;
+                        break outer;
+                    }
+                }
+
+                if(checkIfCandExists == true) {
+                    nextCand = curBallot.getNextCandidate();  //get candidate to redistribute to
+                    for (Candidate curCand : candidates) {     //find candidate to redistribute to
+                        if (curCand.getCandidateName().equals(nextCand)) {
+                            //redistribute to candidate; addBallot() updates Candidate BallotCount
+                            curCand.addBallot(curBallot);
+                        }
                     }
                 }
             }
         }
         //FIXME: possible issue with using loose equality within remove, removing first instance of this candidate
         //todo: may need to get this candidate's name and manually remove from candidates with for loop
+        System.out.println("removed candidate: " + cand.getCandidateName());
         candidates.remove(cand);
     }
 

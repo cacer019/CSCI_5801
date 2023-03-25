@@ -9,16 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class IRProcessingTest {
 
-    BufferedReader br;
-
     @Test
-    void processElection() throws FileNotFoundException {
+    void processElection1() throws FileNotFoundException {
         //Simulate main giving a br to IRProcessing
-//        File file = new File(".");
-//        for(String fileNames : file.list()) System.out.println(fileNames);
         FileReader csvFile = new FileReader("src/test/java/IRTesting1.csv");
 
-        br = new BufferedReader(csvFile);
+        BufferedReader br = new BufferedReader(csvFile);
         try {
             br.readLine();
         } catch (IOException e) {
@@ -37,6 +33,36 @@ class IRProcessingTest {
         assertEquals(curCandsArray.get(2).getCandidateName(), "Chou");
         assertEquals(curCandsArray.get(0).getBallotCount(), 5);
         assertEquals(curCandsArray.get(2).getBallotCount(), 1);
+
+        assertEquals("Rosen", election.processElection());
+
+    }
+
+    @Test
+    void processElection2() throws FileNotFoundException {
+        //Simulate main giving a br to IRProcessing
+        FileReader csvFile = new FileReader("src/test/java/IRTesting2.csv");
+
+        BufferedReader br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        IRProcessing election = new IRProcessing(br);
+
+        String[] cands = election.getCandidates();
+        assertEquals("Rosen", cands[0]);
+        assertEquals("Kleinberg", cands[1]);
+
+        ArrayList<Candidate> curCandsArray = election.getCandidateArray();
+        assertEquals("Rosen", curCandsArray.get(0).getCandidateName());
+        assertEquals("Kleinberg", curCandsArray.get(1).getCandidateName());
+        assertEquals(3, curCandsArray.get(0).getBallotCount());
+        assertEquals(4, curCandsArray.get(1).getBallotCount());
+
+        //The tie in the first round can go royce or joe, but klein still wins
+        assertEquals("Kleinberg", election.processElection());
 
     }
 //

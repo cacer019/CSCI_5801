@@ -2,7 +2,7 @@
  * ProcessResults.java is used for writing the proceedings and results of an election to an audit file,
  * which is a .txt file with the name <electiontype><date>.txt
  *
- * Written by tracy255, abouz009
+ * @author tracy255, cacer019
  */
 
 import java.io.File;
@@ -157,7 +157,7 @@ public class ProcessResults {
      * @param party Names of the party
      * @param candidate Name of the candidate that won the seat.
      * @param partyBallots The number of ballots voted to respective party.
-     * @throws IOException IOException Throws IOException with null as its error detail message.
+     * @throws IOException Throws IOException with null as its error detail message.
      */
     void addSeatWinner(String party, String candidate, int partyBallots) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
@@ -174,7 +174,7 @@ public class ProcessResults {
      * @param party Party recieving allocated seats.
      * @param partyBallots Number of ballots for respective party.
      * @param quota The quota used to determine remainder winner.
-     * @throws IOException IOException IOException Throws IOException with null as its error detail message.
+     * @throws IOException IOException Throws IOException with null as its error detail message.
      */
     void addSeat(int seatNums, String party, int partyBallots, int quota) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
@@ -188,7 +188,7 @@ public class ProcessResults {
      * Writes that a TIE occurs in CPL election. Shows list of tied parties and chosen winner at random.
      * @param tiedParties arrayList of ties parties.
      * @param chosenWinner The winner that was chosen at random.
-     * @throws IOException IOException IOException Throws IOException with null as its error detail message.
+     * @throws IOException IOException Throws IOException with null as its error detail message.
      */
     void addTie(String tiedParties, String chosenWinner) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
@@ -202,7 +202,7 @@ public class ProcessResults {
     /**
      * Writes to the audit winner of remaining seats.
      * @param party This is the party that won the remainder.
-     * @throws IOException IOException IOException Throws IOException with null as its error detail message.
+     * @throws IOException IOException Throws IOException with null as its error detail message.
      */
     void addRemainder(String party) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);

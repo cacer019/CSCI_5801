@@ -3,7 +3,7 @@
  * the IRProcessing and CPLProcessing classes.
  * It provides the outline for an election processing class.
  *
- * Written by tracy255.
+ * @author tracy255, Caleb Tracy.
  */
 
 import java.io.BufferedReader;

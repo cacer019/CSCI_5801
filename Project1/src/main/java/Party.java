@@ -2,7 +2,7 @@
  * Party.java defines the Party class which is used to create Party objects and related methods on them.
  * Party objects represent political parties in a CPL election.
  *
- * Written by abouz009.
+ * @author abouz009
  */
 
 import java.util.ArrayList;

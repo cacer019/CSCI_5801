@@ -1,7 +1,7 @@
 /**
  * CandidateTest.java is used for testing the methods in the Candidate class.
  *
- * Written by tracy255.
+ * @author tracy255, Caleb Tracy.
  */
 
 import org.junit.jupiter.api.Test;

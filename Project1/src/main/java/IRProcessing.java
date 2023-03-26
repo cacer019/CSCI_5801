@@ -2,7 +2,7 @@
  * IRProcessing.java defines the IRProcessing class, which is used to process an IR election
  * and determine its results while documenting the course of the election processing.
  *
- * Written by tracy255, ber00063.
+ * @author tracy255, ber00063.
  */
 
 import java.io.BufferedReader;

@@ -1,11 +1,23 @@
+/**
+ * CandidateTest.java is used for testing the methods in the Candidate class.
+ *
+ * Written by tracy255.
+ */
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * CandidateTest class contains methods for testing the Candidate class.
+ */
 class CandidateTest {
 
+    /**
+     * Tests if Candidate constructor properly sets Candidate name party name.
+     */
     @Test
     void candidateTypeChecking() {
         Candidate cand1 = new Candidate("party name", "joe biden");
@@ -17,6 +29,9 @@ class CandidateTest {
         assertEquals(cand2.getCandidateName(),"a123&");
     }
 
+    /**
+     * Tests the addBallot() and removeBallot() methods in the Candidate class.
+     */
     @Test
     void addRemoveBallot() {
         ArrayList<String> cands1 = new ArrayList<String>();
@@ -54,6 +69,9 @@ class CandidateTest {
         //assertThrows(cand1.removeBallot(0), exception(e));
     }
 
+    /**
+     * Tests the getBallotCount() method in the Candidate class().
+     */
     @Test
     void getBallotCount() {
 
@@ -101,6 +119,9 @@ class CandidateTest {
         assertEquals(countCand.getBallotCount(), 0);
     }
 
+    /**
+     * Tests the getParty() method in the Candidate class.
+     */
     @Test
     void getParty() {
         Candidate cand1 = new Candidate("party name", "cand name");
@@ -114,6 +135,9 @@ class CandidateTest {
         assertEquals(cand4.getParty(), "123450");
     }
 
+    /**
+     * Tests the getBallots() method in the Candidate class.
+     */
     @Test
     void getBallots() {
 
@@ -150,6 +174,9 @@ class CandidateTest {
 
     }
 
+    /**
+     * Tests the getCandidateName() method in the Candidate class.
+     */
     @Test
     void getCandidateName() {
         Candidate cand1 = new Candidate("party name", "cand name");

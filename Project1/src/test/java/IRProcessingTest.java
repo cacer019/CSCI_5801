@@ -1,3 +1,9 @@
+/**
+ * IRProcessingTest.java is used for testing the methods in the IRProcessing class.
+ *
+ * Written by tracy255.
+ */
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -7,8 +13,15 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * IRProcessingTest class contains methods for testing the IRProcessing class.
+ */
 class IRProcessingTest {
 
+    /**
+     * Tests the processElection() method in the IRProcessing class.
+     * @throws IOException  if IO exception occurs when reading from csv file.
+     */
     @Test
     void processElection1() throws IOException {
         //Simulate main giving a br to IRProcessing
@@ -38,6 +51,10 @@ class IRProcessingTest {
 
     }
 
+    /**
+     * Tests the processElection() method in the IRProcessing class.
+     * @throws IOException  if IO exception occurs when reading from csv file.
+     */
     @Test
     void processElection2() throws IOException {
         //Simulate main giving a br to IRProcessing
@@ -65,25 +82,39 @@ class IRProcessingTest {
         assertEquals("Kleinberg", election.processElection());
 
     }
-//
+
+//    /**
+//     * Tests the setCandidates() method in the IRProcessing class.
+//     */
 //    @Test
 //    void setCandidates() {
 //
 //    }
 //
+//    /**
+//     * Tests the getCandidates() method in the IRProcessing class.
+//     */
 //    @Test
 //    void getCandidates() {
 //
 //    }
-//
+//    /**
+//     * Tests the getParties() method in the IRProcessing class.
+//     */
 //    @Test
 //    void getParties() {
 //    }
 //
+//    /**
+//     * Tests the determineLoser() method in the IRProcessing class.
+//     */
 //    @Test
 //    void determineLoser() {
 //    }
 //
+//    /**
+//     * Tests the redistributeBallots() method in the IRProcessing class.
+//     */
 //    @Test
 //    void redistributeBallots() {
 //

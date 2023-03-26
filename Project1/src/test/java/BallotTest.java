@@ -1,11 +1,23 @@
+/**
+ * BallotTest.java is used for testing the methods in the Ballot class.
+ *
+ * Written by tracy255
+ */
+
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * BallotTest class contains test methods for the Ballot class.
+ */
 class BallotTest {
 
+    /**
+     * Tests the getNextCandidate() and updateBallot() methods in the Ballot class.
+     */
     @Test
     void getNextCandidateAndUpdate() {
         ArrayList<String> cands1 = new ArrayList<String>();
@@ -36,6 +48,9 @@ class BallotTest {
 //        assertEquals(blt2.updateBallot(), false);
     }
 
+    /**
+     * Tests the getIndex() method in the Ballot class.
+     */
     @Test
     void getIndex() {
         ArrayList<String> cands = new ArrayList<String>();

@@ -1,14 +1,40 @@
+/**
+ * IRProcessing.java defines the IRProcessing class, which is used to process an IR election
+ * and determine its results while documenting the course of the election processing.
+ *
+ * Written by tracy255, ber00063.
+ */
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * IRProcessing class used for processing an IR election.
+ * Implements IElectionProcessing, an interface outlining election processing.
+ */
 public class IRProcessing implements IElectionProcessing {
 
     private static ArrayList<Candidate> candidates;
+    /**
+     * an integer that keeps track of the total number of ballots that were cast in an election.
+     */
     int totalNumBallots = 0;
+    /**
+     * instantiates a ProcessResults instance, which is used to write election proceedings to an audit file.
+     */
     ProcessResults auditFileOutput;
 
+
+    /**
+     * Calls the setCandidates() and distributeBallots() to set up the processing of an IR
+     * election and then calls processElection() to process the election.
+     * Writes to audit file information about election proceedings.
+     * @param br  a BufferedReader, buffers the input from a FileReader that is reading
+     *            from the election information csv file
+     * @throws IOException  throws an IOException if distributeBallots() throws an IOException
+     *                      when called
+     */
     public IRProcessing(BufferedReader br) throws IOException {
         candidates = new ArrayList<>();
 
@@ -27,6 +53,12 @@ public class IRProcessing implements IElectionProcessing {
         processElection();
     }
 
+
+    /**
+     * Does the work of actually running an IR election to determine the winner and losers.
+     * Writes proceedings to audit file.
+     * @return  the name of the election winner as a String, "FAILURE" if error.
+     */
     @Override
     public String processElection() {
         while(candidates.size() > 0) {
@@ -55,6 +87,10 @@ public class IRProcessing implements IElectionProcessing {
         return "FAILURE";
     }
 
+    /**
+     * Gets a list of all the political parties that candidates belong to.
+     * @return  a String[] containing the political parties of candidates as Strings
+     */
     @Override
     public String[] getParties() {
         String[] partyStrings = new String[candidates.size()];
@@ -64,6 +100,10 @@ public class IRProcessing implements IElectionProcessing {
         return partyStrings;
     }
 
+    /**
+     * Gets a list of the candidates in the election.
+     * @return  a String[] containing the names of the candidates as Strings
+     */
     @Override
     public String[] getCandidates() {
         //loops through candidates and adds their names to a String array
@@ -74,11 +114,19 @@ public class IRProcessing implements IElectionProcessing {
         return candStrings;
     }
 
+    /**
+     * Gets the list of candidates in the election.
+     * @return  an ArrayList of Candidate objects that represent the candidates in the election
+     */
     public ArrayList<Candidate> getCandidateArray() {
         return candidates;
     }
 
-
+    /**
+     * Reads from the election information csv file to create the Candidates.
+     * @param br  BufferedReader, buffers the input from a FileReader that is reading
+     *            from the election information csv file
+     */
     private void setCandidates(BufferedReader br) {
         //Read the second line (candidates
         String curLine;
@@ -111,6 +159,12 @@ public class IRProcessing implements IElectionProcessing {
         }
     }
 
+    /**
+     * Reads from the election information csv file to distribute Ballots to the Candidates.
+     * @param br  BufferedReader, buffers the input from a FileReader that is reading
+     *            from the election information csv file.
+     * @throws IOException  if IO error occurs when reading file.
+     */
     private void distributeBallots(BufferedReader br) throws IOException {
         //Get the 4th line of the CSV file
         String nextLine = br.readLine();
@@ -156,7 +210,13 @@ public class IRProcessing implements IElectionProcessing {
     }
 
 
-
+    /**
+     * Determines which candidate to eliminate from the election.
+     * Chooses the candidate with the least first choice votes.
+     * If there is a tie for candidates with the least first choice votes, a fair coin toss is
+     * simulated by randomly choosing a loser.
+     * @return  the Candidate that is the loser
+     */
     public Candidate determineLoser() {
         int minVotes = Integer.MAX_VALUE;
         int tempVotes;
@@ -188,8 +248,13 @@ public class IRProcessing implements IElectionProcessing {
 
     }
 
-    //Takes a candidate, and passes their ballots onto their next ranked candidate
-    //accounts for lost ballots when there are no more rankings
+
+    /**
+     * Takes a candidate and redistributes their ballots to other candidates.
+     * Gives each ballot to the next ranked candidate on that ballot.
+     * Accounts for lost ballots when there are no more rankings.
+     * @param cand  the candidate whose votes will be redistributed
+     */
     public void redistributeBallots(Candidate cand){
         //nextCand is used in for each loop
         String nextCand;

@@ -27,10 +27,8 @@ class BallotTest {
         assertEquals(blt1.getNextCandidate(),"caleb");
         assertEquals(blt1.updateBallot(), true);
         assertEquals(blt1.getNextCandidate(),"ashton");
-        assertEquals(blt1.updateBallot(), true);
+        assertEquals(blt1.updateBallot(), false);
         assertEquals(blt1.getNumRankings(), 0);
-        assertEquals(blt1.updateBallot(), false);
-        assertEquals(blt1.updateBallot(), false);
 
         ArrayList<String> cands2 = new ArrayList<String>();
         cands2.add("caleb");

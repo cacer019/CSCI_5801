@@ -57,6 +57,7 @@ public class main {
             return true;
         }
         else if (electionType.equals("IR")) {
+
             //IRProcessing.processElection(myReader);
             return true;
         }

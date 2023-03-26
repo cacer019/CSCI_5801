@@ -31,7 +31,7 @@ public class ProcessResults {
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
         String strDate = formatter.format(date);
 
-        String fileName = "auditFile" + electionType + strDate + ".txt";
+        String fileName = "auditFile-" + electionType + "-" + strDate + ".txt";
         File newFile = new File(fileName);
         auditFile = newFile;
         if(!auditFile.exists()) {

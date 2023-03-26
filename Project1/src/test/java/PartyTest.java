@@ -26,10 +26,24 @@ class PartyTest {
 
     @Test
     void removeCandidate() {
+        ArrayList<String> candidates = new ArrayList<>();
+        candidates.add("candidate1");
+
+        Party party = new Party("party", candidates);
+        party.addCandidate("CANDIDATE2");
+        party.addCandidate("cAnDiDaTe3");
+
+        party.removeCandidate("CANDIDATE2");
+        assertEquals(party.getCandidates().get(1), "cAnDiDaTe3");
+        party.removeCandidate("candidate1");
+        assertEquals(party.getCandidates().get(0), "cAnDiDaTe3");
+        party.removeCandidate("cAnDiDaTe3");
+        assertEquals(party.getCandidates().size(), 0);
+
     }
 
     @Test
-    void getCandidate() {
+    void getCandidates() {
     }
 
     @Test

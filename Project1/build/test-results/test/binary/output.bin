@@ -10,7 +10,7 @@
 curcandcunt -> Chou: 2
 curcandcunt -> Royce: 1
 curcandcunt -> Joe: 1
-TIERoyceJoe
+TIERoyce Joe
 ballot 9 : 2
 removed candidate: Royce
 totalnumballots: 10
@@ -18,20 +18,20 @@
 curcandcunt -> Kleinberg: 3
 curcandcunt -> Chou: 2
 curcandcunt -> Joe: 2
-TIEChouJoe
+TIEChou Joe
+ballot 2 : 3
+ballot 8 : 1
+REMOVED A BALLOT
+removed candidate: Chou
+totalnumballots: 9
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 4
+curcandcunt -> Joe: 2
 ballot 5 : 1
 REMOVED A BALLOT
 ballot 9 : 1
 REMOVED A BALLOT
 removed candidate: Joe
-totalnumballots: 8
-curcandcunt -> Rosen: 3
-curcandcunt -> Kleinberg: 3
-curcandcunt -> Chou: 2
-ballot 2 : 3
-ballot 8 : 1
-REMOVED A BALLOT
-removed candidate: Chou
 totalnumballots: 7
 curcandcunt -> Rosen: 3
 curcandcunt -> Kleinberg: 4

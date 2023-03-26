@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IRProcessingTest {
 
     @Test
-    void processElection1() throws FileNotFoundException {
+    void processElection1() throws IOException {
         //Simulate main giving a br to IRProcessing
         FileReader csvFile = new FileReader("src/test/java/IRTesting1.csv");
 
@@ -39,7 +39,7 @@ class IRProcessingTest {
     }
 
     @Test
-    void processElection2() throws FileNotFoundException {
+    void processElection2() throws IOException {
         //Simulate main giving a br to IRProcessing
         FileReader csvFile = new FileReader("src/test/java/IRTesting2.csv");
 

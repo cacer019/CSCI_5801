@@ -7,14 +7,22 @@ public class IRProcessing implements IElectionProcessing {
 
     private static ArrayList<Candidate> candidates;
     int totalNumBallots = 0;
+    ProcessResults auditFileOutput;
 
-    public IRProcessing(BufferedReader br) {
+    public IRProcessing(BufferedReader br) throws IOException {
         candidates = new ArrayList<>();
+
+        auditFileOutput = new ProcessResults();
+        auditFileOutput.addVotingType("Instant-Runoff");
+
         setCandidates(br);
         try {
             distributeBallots(br);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+        for(Candidate curCand : candidates) {
+            auditFileOutput.addCandidate(curCand.getCandidateName(), curCand.getParty(), curCand.getBallotCount());
         }
         processElection();
     }
@@ -28,6 +36,9 @@ public class IRProcessing implements IElectionProcessing {
                 System.out.println("curcandcunt -> " + curCand.getCandidateName() + ": " + curCand.getBallotCount());
                 if (curCand.getBallotCount() > (totalNumBallots * 0.5)) {
                     //winner is candidate
+                    try {
+                        auditFileOutput.addWinner(curCand.getCandidateName(), curCand.getBallotCount());
+                    } catch (IOException e) { throw new RuntimeException(e); }
                     System.out.println("----------WINNER: " + curCand.getCandidateName() + "----------");
                     return curCand.getCandidateName();
                 }
@@ -35,6 +46,9 @@ public class IRProcessing implements IElectionProcessing {
             }
             //Call determineLoser, if only two left check for a tie and break it (look at activity diagram for order)
             Candidate loser = determineLoser();
+            try {
+                auditFileOutput.addLoser(loser.getCandidateName(), loser.getBallotCount());
+            } catch (IOException e) { throw new RuntimeException(e); }
             //redistributeBallots accordingly, removes losing candidate
             redistributeBallots(loser);
         }
@@ -70,7 +84,8 @@ public class IRProcessing implements IElectionProcessing {
         String curLine;
         try {
             //read the number of candidates, then the names
-            br.readLine();
+            String numCands = br.readLine();
+            auditFileOutput.addCandidateAmount(numCands);
             curLine = br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -166,7 +181,7 @@ public class IRProcessing implements IElectionProcessing {
         else {
             //the idea here is that there can be multiple losers tied, but only one is randomly chosen as the loser
             //gets random int from 0 to number of possible losers
-            System.out.println("TIE" + loserCandidates.get(0).getCandidateName() + loserCandidates.get(1).getCandidateName());
+            System.out.println("TIE" + loserCandidates.get(0).getCandidateName() + " " + loserCandidates.get(1).getCandidateName());
             int randIndex = (int)(Math.random() * loserCandidates.size());
             return loserCandidates.get(randIndex);
         }
@@ -204,6 +219,9 @@ public class IRProcessing implements IElectionProcessing {
                         //remove this ballot by ignoring it, once this candidate is deleted
                         //the ballots are destroyed by the garbage collector
                         System.out.println("REMOVED A BALLOT - 2");
+                        try {
+                            auditFileOutput.removedBallot(curBallot.getIndex());
+                        } catch (IOException e) { throw new RuntimeException(e); }
                         totalNumBallots--;
                         break outer;
                     }

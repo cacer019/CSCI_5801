@@ -1,0 +1,134 @@
+Election Type: Instant-Runoff
+Number of candidates: 4
+New Candidate:
++++Candidate name: Rosen
++++Party name: D
++++Initial ballot count: 5
+New Candidate:
++++Candidate name: Kleinberg
++++Party name: R
++++Initial ballot count: 0
+New Candidate:
++++Candidate name: Chou
++++Party name: I
++++Initial ballot count: 1
+New Candidate:
++++Candidate name: Royce
++++Party name: L
++++Initial ballot count: 0
+ELECTION WINNER:
++++Candidate name: Rosen
++++Final ballot count: 5
+ELECTION WINNER:
++++Candidate name: Rosen
++++Final ballot count: 5
+Election Type: Instant-Runoff
+Number of candidates: 5
+New Candidate:
++++Candidate name: Rosen
++++Party name: D
++++Initial ballot count: 3
+New Candidate:
++++Candidate name: Kleinberg
++++Party name: R
++++Initial ballot count: 3
+New Candidate:
++++Candidate name: Chou
++++Party name: I
++++Initial ballot count: 2
+New Candidate:
++++Candidate name: Royce
++++Party name: L
++++Initial ballot count: 1
+New Candidate:
++++Candidate name: Joe
++++Party name: LT
++++Initial ballot count: 1
+Removed loser:
++++Candidate name: Royce
++++Final ballot count: 1
+Removed loser:
++++Candidate name: Chou
++++Final ballot count: 2
+Removed loser:
++++Candidate name: Joe
++++Final ballot count: 2
+ELECTION WINNER:
++++Candidate name: Kleinberg
++++Final ballot count: 4
+ELECTION WINNER:
++++Candidate name: Kleinberg
++++Final ballot count: 4
+Election Type: Instant-Runoff
+Number of candidates: 4
+New Candidate:
++++Candidate name: Rosen
++++Party name: D
++++Initial ballot count: 5
+New Candidate:
++++Candidate name: Kleinberg
++++Party name: R
++++Initial ballot count: 0
+New Candidate:
++++Candidate name: Chou
++++Party name: I
++++Initial ballot count: 1
+New Candidate:
++++Candidate name: Royce
++++Party name: L
++++Initial ballot count: 0
+ELECTION WINNER:
++++Candidate name: Rosen
++++Final ballot count: 5
+
+
+
+ELECTION WINNER:
++++Candidate name: Rosen
++++Final ballot count: 5
+
+
+
+Election Type: Instant-Runoff
+Number of candidates: 5
+New Candidate:
++++Candidate name: Rosen
++++Party name: D
++++Initial ballot count: 3
+New Candidate:
++++Candidate name: Kleinberg
++++Party name: R
++++Initial ballot count: 3
+New Candidate:
++++Candidate name: Chou
++++Party name: I
++++Initial ballot count: 2
+New Candidate:
++++Candidate name: Royce
++++Party name: L
++++Initial ballot count: 1
+New Candidate:
++++Candidate name: Joe
++++Party name: LT
++++Initial ballot count: 1
+Removed loser:
++++Candidate name: Royce
++++Final ballot count: 1
+Removed loser:
++++Candidate name: Chou
++++Final ballot count: 2
+Removed loser:
++++Candidate name: Joe
++++Final ballot count: 2
+ELECTION WINNER:
++++Candidate name: Kleinberg
++++Final ballot count: 4
+
+
+
+ELECTION WINNER:
++++Candidate name: Kleinberg
++++Final ballot count: 4
+
+
+

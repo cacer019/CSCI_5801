@@ -133,4 +133,79 @@ public class ProcessResults {
         bw.close();
     }
 
+    /**
+     * Writes the Parties in the running for CPL Election.
+     * @param party Name of the parties in CPL election.
+     * @param candidates String of Candidates for said party.
+     * @param partyBallots number of ballots in a party.
+     * @throws IOException Throws IOException with null as its error detail message.
+     */
+    void addParty(String party, String candidates, int partyBallots) throws IOException {
+        FileWriter fw = new FileWriter(auditFile.getName(),true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write("New Party:\n+++Party name: " + party + "\n+++Party Candidates: " + candidates + "\n");
+        bw.write("+++Initial Party ballot count: " + Integer.toString(partyBallots) + "\n");
+        bw.close();
+    }
+
+    /**
+     * Writes Party Winner and the candidate to the audit file.
+     * @param party Names of the party
+     * @param candidate Name of the candidate that won the seat.
+     * @param partyBallots The number of ballots voted to respective party.
+     * @throws IOException IOException Throws IOException with null as its error detail message.
+     */
+    void addSeatWinner(String party, String candidate, int partyBallots) throws IOException {
+        FileWriter fw = new FileWriter(auditFile.getName(),true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write("PARTY WINNER:\n+++ : " + party + "Seat Winner: " + candidate+ "\n");
+        bw.write("+++Final Party ballot count: " + Integer.toString(partyBallots) + "\n");
+        bw.write("\n\n\n");
+        bw.close();
+    }
+
+    /**
+     * Writes the allocation of seats for a CPL election.
+     * @param seatNums Number of seats being allocated.
+     * @param party Party recieving allocated seats.
+     * @param partyBallots Number of ballots for respective party.
+     * @param quota The quota used to determine remainder winner.
+     * @throws IOException IOException IOException Throws IOException with null as its error detail message.
+     */
+    void addSeat(int seatNums, String party, int partyBallots, int quota) throws IOException {
+        FileWriter fw = new FileWriter(auditFile.getName(),true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write(seatNums +" SEATS ALLOCATED TO:\n+++ : " + party + "TOTAL BALLOTS TO PARTY: " + partyBallots+ "LARGEST REMAINDER QUOTA: " + "quota" + "\n");
+        bw.write("\n\n\n");
+        bw.close();
+    }
+
+    /**
+     * Writes that a TIE occurs in CPL election. Shows list of tied parties and chosen winner at random.
+     * @param tiedParties arrayList of ties parties.
+     * @param chosenWinner The winner that was chosen at random.
+     * @throws IOException IOException IOException Throws IOException with null as its error detail message.
+     */
+    void addTie(String tiedParties, String chosenWinner) throws IOException {
+        FileWriter fw = new FileWriter(auditFile.getName(),true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write("TIED PARTIES:\n+++ " + tiedParties);
+        bw.write("WINNER OF TIE:\n+++ " + chosenWinner);
+        bw.write("\n\n\n");
+        bw.close();
+    }
+
+    /**
+     * Writes to the audit winner of remaining seats.
+     * @param party This is the party that won the remainder.
+     * @throws IOException IOException IOException Throws IOException with null as its error detail message.
+     */
+    void addRemainder(String party, int remainder) throws IOException {
+        FileWriter fw = new FileWriter(auditFile.getName(),true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        bw.write("REMAINING SEAT ALLOCATED TO:\n+++ : " + party + " DUE TO HIGHER REMAINDER" + "\n");
+        bw.write("\n\n\n");
+        bw.close();
+    }
+
 }

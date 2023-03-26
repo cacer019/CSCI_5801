@@ -21,8 +21,8 @@ As instructed csv test files for system testing were moved in the "testing" dire
 underneath "Project1". They are necessary for running the tests within CPLProcessingTest 
 and IRProcessingText files and must be moved back into those folders if those tests are ran.
 
-### Special case: CSV file location
-Any csv file used for running the program should be located in the working directory
+### Special case: Input CSV file location
+Any csv file used for running the program should be located under the working directory
 which is assumed to be Project1. The checkArgs() method in main will not locate the
 csv file if it is not under "Project1/".
 

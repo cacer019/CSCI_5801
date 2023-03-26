@@ -1,3 +1,4 @@
+
 /**
  * Ballot.java defines the Ballot class which is used for creating Ballot objects and
  * related methods on them to be used during an IR election.

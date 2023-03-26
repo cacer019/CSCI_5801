@@ -1,3 +1,4 @@
+
 /**
  * Candidate.java defines the Candidate class which is used for creating Candidate objects and
  * related methods on them to be used during an IR election.

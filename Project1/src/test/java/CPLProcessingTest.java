@@ -37,7 +37,7 @@ class CPLProcessingTest {
     }
 
     @Test
-    void getCandidates() {
+    void getCandidates() throws IOException {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
@@ -67,7 +67,7 @@ class CPLProcessingTest {
     }
 
     @Test
-    void getParties() {
+    void getParties() throws IOException {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
 
         BufferedReader br = new BufferedReader(csvFile);

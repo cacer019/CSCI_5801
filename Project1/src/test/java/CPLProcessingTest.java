@@ -47,7 +47,7 @@ class CPLProcessingTest {
      * a party is created with the correct party name and candidates associated with that party .
      */
     @Test
-    void setParties() {
+    void setParties() throws IOException {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
@@ -59,31 +59,43 @@ class CPLProcessingTest {
         CPLProcessing election = new CPLProcessing(br);     //setParties() called
 
         ArrayList<Party> parts = election.getParties();     //check if parties are all correct
-        ArrayList<String> cands = new ArrayList<String>();
+        ArrayList<String> cands = new ArrayList<>();
 
-        cands = <"Foster", "Volz", "Pike">;
+        cands.add("Foster");
+        cands.add("Volz");
+        cands.add("Pike");
         assertEquals(parts.get(0).getParty(), "Democratic");
-        assertEquals(parts.get(0).getCandidates, cands);
+        assertEquals(parts.get(0).getCandidates(), cands);
 
-        cands = <"Green", "Xu", "Wang">;
+        cands.clear();
+        cands.add("Green");
+        cands.add("Xu");
+        cands.add("Wang");
         assertEquals(parts.get(1).getParty(), "Republican");
-        assertEquals(parts.get(1).getCandidates, cands);
+        assertEquals(parts.get(1).getCandidates(), cands);
 
-        cands = <"Jacks", "Rosen">;
+        cands.clear();
+        cands.add("Jacks");
+        cands.add("Rosen");
         assertEquals(parts.get(2).getParty(), "New Wave");
-        assertEquals(parts.get(2).getCandidates, cands);
+        assertEquals(parts.get(2).getCandidates(), cands);
 
-        cands = <"McClure", "Berg">;
+        cands.clear();
+        cands.add("McClure");
+        cands.add("Berg");
         assertEquals(parts.get(3).getParty(), "Reform");
-        assertEquals(parts.get(3).getCandidates, cands);
+        assertEquals(parts.get(3).getCandidates(), cands);
 
-        cands = <"Zheng", "Melvin">;
+        cands.clear();
+        cands.add("Zheng");
+        cands.add("Melvin");
         assertEquals(parts.get(4).getParty(), "Green");
-        assertEquals(parts.get(4).getCandidates, cands);
+        assertEquals(parts.get(4).getCandidates(), cands);
 
-        cands = <"Peters">;
+        cands.clear();
+        cands.add("Peters");
         assertEquals(parts.get(5).getParty(), "Independent");
-        assertEquals(parts.get(5).getCandidates, cands);
+        assertEquals(parts.get(5).getCandidates(), cands);
     }
 
     /**

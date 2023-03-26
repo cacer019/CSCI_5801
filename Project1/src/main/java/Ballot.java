@@ -14,9 +14,18 @@ import java.util.ArrayList;
  */
 public class Ballot {
 
+    /**
+     * unique identification value for a ballot as an int
+     */
     private int ballotIndex;  //starts at 0
+    /**
+     * the number of candidates ranked on a ballot as an int
+     */
     private int numRankings; //will always start with at least 1
     //private rankings
+    /**
+     * ArrayList of strings that represent the names of the candidates on a ballot
+     */
     private ArrayList<String> candidates;
 
     /**

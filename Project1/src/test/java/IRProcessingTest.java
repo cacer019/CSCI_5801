@@ -86,7 +86,10 @@ class IRProcessingTest {
 
     }
 
-
+    /**
+     * Tests the determineLoser() method in IRProcessing
+     * @throws IOException if IO error occurs when reading from file
+     */
     @Test
     void determineLoser() throws IOException{
         FileReader csvFile = new FileReader("src/test/java/IRTesting4.csv");
@@ -112,6 +115,7 @@ class IRProcessingTest {
 
     /**
      * Tests the redistributeBallots() method in the IRProcessing class.
+     * @throws IOException if IO error occurs when reading from file
      */
     @Test
     void redistributeBallots() throws IOException{

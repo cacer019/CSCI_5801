@@ -20,10 +20,25 @@ import java.util.Collections;
  */
 public class CPLProcessing implements IElectionProcessing {
 
+    /**
+     * ArrayList of Party objects that represent the apolitical parties in the elction
+     */
     private ArrayList<Party> parties;
+    /**
+     * the number of political parties in the election as an int
+     */
     private int numParties;
+    /**
+     * the number of seats up for distribution in the election as an int
+     */
     private int numSeats;
+    /**
+     * the total number of ballots that were cast in the election as an int
+     */
     private int numBallots;
+    /**
+     * the total number of candidates participating in the election
+     */
     private int numCandidates;
     ProcessResults auditFileOutput;
     /**

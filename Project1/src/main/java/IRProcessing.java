@@ -17,6 +17,9 @@ import java.util.ArrayList;
  */
 public class IRProcessing implements IElectionProcessing {
 
+    /**
+     * an ArrayList of Candidate objects that represents the candidates in the election
+     */
     private static ArrayList<Candidate> candidates;
     /**
      * an integer that keeps track of the total number of ballots that were cast in an election.

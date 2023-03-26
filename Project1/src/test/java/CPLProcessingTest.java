@@ -45,6 +45,7 @@ class CPLProcessingTest {
     /**
      * Tests the setParties() method in the CPLProcessing class to make sure
      * a party is created with the correct party name and candidates associated with that party .
+     * @throws an IOException if an IO error occurs when reading from file
      */
     @Test
     void setParties() throws IOException {

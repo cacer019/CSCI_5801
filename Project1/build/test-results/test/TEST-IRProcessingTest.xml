@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="IRProcessingTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-03-26T02:44:10" hostname="DESKTOP-L6K1JGQ" time="0.034">
+  <properties/>
+  <testcase name="processElection1()" classname="IRProcessingTest" time="0.026"/>
+  <testcase name="processElection2()" classname="IRProcessingTest" time="0.007"/>
+  <system-out><![CDATA[totalnumballots: 6
+curcandcunt -> Rosen: 5
+----------WINNER: Rosen----------
+totalnumballots: 6
+curcandcunt -> Rosen: 5
+----------WINNER: Rosen----------
+totalnumballots: 10
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+curcandcunt -> Royce: 1
+curcandcunt -> Joe: 1
+TIERoyce Joe
+ballot 9 : 2
+removed candidate: Royce
+totalnumballots: 10
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+curcandcunt -> Joe: 2
+TIEChou Joe
+ballot 5 : 1
+REMOVED A BALLOT
+ballot 9 : 1
+REMOVED A BALLOT
+removed candidate: Joe
+totalnumballots: 8
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+ballot 2 : 3
+ballot 8 : 1
+REMOVED A BALLOT
+removed candidate: Chou
+totalnumballots: 7
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 4
+----------WINNER: Kleinberg----------
+totalnumballots: 7
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 4
+----------WINNER: Kleinberg----------
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -2,8 +2,8 @@ import java.io.BufferedReader;
 
 public class IRProcessing implements IElectionProcessing {
     @Override
-    public boolean processElection(BufferedReader br) {
-        return false;
+    public String processElection() {
+        return "";
     }
 
     @Override

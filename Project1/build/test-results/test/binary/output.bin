@@ -19,19 +19,19 @@
 curcandcunt -> Chou: 2
 curcandcunt -> Joe: 2
 TIEChou Joe
-ballot 2 : 3
-ballot 8 : 1
-REMOVED A BALLOT
-removed candidate: Chou
-totalnumballots: 9
-curcandcunt -> Rosen: 3
-curcandcunt -> Kleinberg: 4
-curcandcunt -> Joe: 2
 ballot 5 : 1
 REMOVED A BALLOT
 ballot 9 : 1
 REMOVED A BALLOT
 removed candidate: Joe
+totalnumballots: 8
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 3
+curcandcunt -> Chou: 2
+ballot 2 : 3
+ballot 8 : 1
+REMOVED A BALLOT
+removed candidate: Chou
 totalnumballots: 7
 curcandcunt -> Rosen: 3
 curcandcunt -> Kleinberg: 4

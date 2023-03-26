@@ -4,36 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * CPLProcessing.java
- *
- * This file implements a CPLProcessing class that is responsible for handling a CPL election. This class incorporates
- * CPLProcessing object creation, seat distribution, ballot distribution, setting election parties, and processing of
- * the CPL election itself.
- *
- * Attributes to this CPLProcessing class include an ArrayList of the parties in the election,
- * an Integer numParties with the total number of parties in the election, an Integer numAvailableSeats that stores the
- * total number of seats in the running, an Integer numBallots that indicates the total number of ballots that will
- * be processed, and an Integer numCandidates that indicates the number of candidates in the CPL election.
- *
- * @author Elias Josue Caceres
- * @author Garret Abou-Zeid
- */
 public class CPLProcessing implements IElectionProcessing {
 
     private ArrayList<Party> parties;
     private int numParties;
-    private int numAvailableSeats;
+    private int numSeats;
     private int numBallots;
     private int numCandidates;
 
-    /**
-     * This is the constructor of a CPLProcessing object. It requires a location to the CPL election file. When this
-     * constructor is called the processing of a CPL election as a whole is executed.
-     *
-     * @param br Input stream of CPL election ballot file used to read parties in election.
-     * @throws IOException Throws IOException with null as its error detail message.
-     */
     public CPLProcessing(BufferedReader br) throws IOException {
         this.parties = new ArrayList<>();
         setParties(br);
@@ -46,24 +24,21 @@ public class CPLProcessing implements IElectionProcessing {
         processElection();
     }
 
-    /**
-     * The distributeSeats method goes through each party in the election and allocates seats to each party according
-     * to the calculated vote qouta. This method also handles ties in a fair manner through random number generation.
-     */
     private void distributeSeats() {
         // Calculates quota by dividing number of seats by the number of ballots.
 
-        int quota = getNumBallots() / getNumAvailableSeats();
+        int quota = getNumBallots() / getNumSeats();
+        int numAvailableSeats = getNumSeats();
 
         ArrayList<Integer> remainders = new ArrayList<>();
         // Allocates seats to parties based on quota and calculates the remainders
         for (Party party : this.parties) {
             party.setNumSeats(party.getBallotCount() / quota);
-            setNumAvailableSeats(getNumAvailableSeats() - party.getBallotCount() / quota);
+            numAvailableSeats -= party.getBallotCount() / quota;
             remainders.add(party.getBallotCount() % quota);
         }
         // Allocates the rest of the seats based on highest remainder
-        while (getNumAvailableSeats() > 0) {
+        while (numAvailableSeats > 0) {
             int highestRemainder = Collections.max(remainders);
             int seatIndex = remainders.indexOf((highestRemainder));
             // Checks to see if there is a tie for remainder
@@ -87,18 +62,9 @@ public class CPLProcessing implements IElectionProcessing {
                 this.parties.get(seatIndex).setNumSeats(this.parties.get(seatIndex).getNumSeats() + 1);
                 remainders.set(seatIndex, 0);
             }
-            setNumAvailableSeats(getNumAvailableSeats() - 1);
+            numAvailableSeats--;
         }
     }
-
-    /**
-     * This method reads the CPL ballot file to determine the parties in the election. The parties are read and set
-     * into a String array. The string array of the parties is then iterated through to create individual party objects
-     * and their corresponding candidates.
-     *
-     * @param br Input stream of CPL election ballot file used to read parties in election.
-     * @throws IOException Throws IOException with null as its error detail message.
-     */
 
     private void setParties(BufferedReader br) throws IOException {
         // Gets number if parties (2nd Line)
@@ -123,19 +89,11 @@ public class CPLProcessing implements IElectionProcessing {
         setNumCandidates(numCandidates);
     }
 
-    /**
-     * distributeBallots reads through the ballots for CPL election and disburses votes to their according party.
-     *
-     * @param br Input stream of CPL election ballot file.
-     * @param parties Array of the parties in the CPL election.
-     * @throws IOException throws IOException with null as its error detail message.
-     */
-
     private void distributeBallots(BufferedReader br, ArrayList<Party> parties) throws IOException {
 
         // Reads number of available seats
         int numSeats = Integer.parseInt(br.readLine());
-        setNumAvailableSeats(numSeats);
+        setNumSeats(numSeats);
 
         // Reads number of ballots that were submitted
         int numBallots = Integer.parseInt(br.readLine());
@@ -163,16 +121,12 @@ public class CPLProcessing implements IElectionProcessing {
             }
         }
     }
-
-    /**
-     * This method processes the winners of the CPL election and details to their election process. This displays
-     * information on the election such as type of election, number of seats and stats for everyone such as number of
-     * votes recieved.
-     * @return String of winning candidates.
-     */
     @Override
     public String processElection() {
         String seatWinners = "";
+        System.out.println("CPL Election");
+        System.out.println("Number of seats: " + getNumSeats());
+        System.out.println("Number of ballots: " + getNumBallots());
         System.out.println("---------- Seats that are allocated ----------");
         for (Party party : parties) {
             for (int i = 0; i < party.getNumSeats(); i++) {
@@ -184,66 +138,34 @@ public class CPLProcessing implements IElectionProcessing {
         return seatWinners;
     }
 
-    /**
-     * getNumParties gets the number of parties in the CPL election.
-     * @return Number of parties in the CPLProcessing object.
-     */
     public int getNumParties() {
         return this.numParties;
     }
 
-    /**
-     * setNumParties sets the number of parties in the CPL election.
-     * @param numParties Integer input to set the number of parties in a CPLProcessing object.
-     */
     public void setNumParties(int numParties) {
         this.numParties = numParties;
     }
 
-    /**
-     * getNumAvailableSeats gets the number of available seats in the CPL election.
-     * @return Number of available seats in the CPLProcessing object.
-     */
-    public int getNumAvailableSeats() {
-        return this.numAvailableSeats;
+    public int getNumSeats() {
+        return this.numSeats;
     }
 
-    /**
-     * setNumAvailableSeats sets the number of available seats in the CPL election.
-     * @param numSeats Integer input to set the number of available seats in a CPLProcessing object.
-     */
-    public void setNumAvailableSeats(int numSeats) {
-        this.numAvailableSeats = numSeats;
+    public void setNumSeats(int numSeats) {
+        this.numSeats = numSeats;
     }
 
-    /**
-     * getNumBallots gets the number of ballots in a CPL election.
-     * @return Number of ballots in the CPLProcessing object.
-     */
     public int getNumBallots() {
         return this.numBallots;
     }
 
-    /**
-     * setNumBallots is used to set the number of ballots in a CPL election.
-     * @param numBallots Integer input to set the number of ballots in a CPLProcessing object.
-     */
     public void setNumBallots(int numBallots) {
         this.numBallots = numBallots;
     }
 
-    /**
-     * getNumCandidates gets the number of candidates in a CPL election.
-     * @return Number of candidates in the CPLProcessing object.
-     */
     public int getNumCandidates() {
         return this.numCandidates;
     }
 
-    /**
-     * setNumCandidates is used to set the number of candidates in a CPL election.
-     * @param num Integer input to set the number of candidates in a CPLProcessing object.
-     */
     public void setNumCandidates(int num) {
         this.numCandidates = num;
     }

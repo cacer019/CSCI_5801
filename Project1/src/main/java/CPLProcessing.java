@@ -16,7 +16,7 @@ import java.util.Collections;
  * be processed, and an Integer numCandidates that indicates the number of candidates in the CPL election.
  *
  * @author Elias Josue Caceres
- * @author Garret Abou-Zeid
+ * @author Garrett Abou-Zeid
  */
 public class CPLProcessing implements IElectionProcessing {
 
@@ -237,11 +237,10 @@ public class CPLProcessing implements IElectionProcessing {
     }
 
     @Override
-    // Not used
     public String[] getCandidates() {
-        String[] candidateStrings = new String[numCandidates];
+        String[] candidateStrings = new String[getNumCandidates()];
         int index = 0;
-        for (int i = 0; i < this.parties.size(); i++) {
+        for (int i = 0; i < getNumParties(); i++) {
             ArrayList<String> candidates = parties.get(i).getCandidates();
             for (String candidate : candidates) {
                 candidateStrings[index] = candidate;
@@ -252,10 +251,9 @@ public class CPLProcessing implements IElectionProcessing {
     }
 
     @Override
-    // Not used
     public String[] getParties() {
-        String[] partyStrings = new String[this.parties.size()];
-        for (int i = 0; i < this.parties.size(); i++) {
+        String[] partyStrings = new String[getNumParties()];
+        for (int i = 0; i < getNumParties(); i++) {
             partyStrings[i] = parties.get(i).getParty();
         }
         return partyStrings;

@@ -17,6 +17,8 @@ import java.io.BufferedWriter;
 /**
  * ProcessResults is used in election processing to write election results and proceedings
  * to an audit file.
+ *
+ * @author everyone
  */
 public class ProcessResults {
 

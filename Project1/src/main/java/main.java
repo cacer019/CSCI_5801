@@ -3,7 +3,7 @@
  * This is where the user is prompted for the election file, the type of election is determined,
  * and from there the election is processed based on its type.
  *
- * Written by tracy255.
+ * @author tracy255, Caleb Tracy.
  */
 
 

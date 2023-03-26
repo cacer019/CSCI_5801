@@ -12,6 +12,8 @@ import java.util.ArrayList;
 /**
  * IRProcessing class used for processing an IR election.
  * Implements IElectionProcessing, an interface outlining election processing.
+ *
+ * @author tracy255, Caleb Tracy. Ashton Berg.
  */
 public class IRProcessing implements IElectionProcessing {
 

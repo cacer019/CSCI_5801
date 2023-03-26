@@ -3,7 +3,9 @@
 ### Compilation
 Users are assumed to be using IntelliJ, and run main.main() using their IDE.
 Working directory is assumed to be Project1.
-Modules include Project1, main (subdirectory of src), and test subdirectory of src.
+Modules include Project1, main (subdirectory of src), and test (subdirectory of src).
+All java files should be in the same default package using IntelliJ, as no files 
+have package declarations.
 SDK version is 17.
 This project uses Gradle library manager.
 

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 /**
  * The Party class creates Party objects that represent political parties in a CPL election.
  * It implements IRepresentative, which creates the outline for a representative.
+ *
+ * @author Garrett
  */
 public class Party implements IRepresentative {
 

@@ -4,7 +4,7 @@
  * Candidate objects represent candidates in an IR election, and each Candidate has ballots
  * associated with them that represent the ballots that candidate received during the election.
  *
- * Written by tracy255.
+ * @author tracy255, Caleb Tracy.
  */
 
 import java.util.ArrayList;

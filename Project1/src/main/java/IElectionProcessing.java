@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 
 /**
  * IElectionProcessing interface provides an outline for an election processing class.
+ *
+ * @author tracy255, Caleb Tracy.
  */
 public interface IElectionProcessing {
 

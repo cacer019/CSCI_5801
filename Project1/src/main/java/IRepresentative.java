@@ -4,11 +4,12 @@
  * the Party and Candidate classes.
  * It provides the outline for a representative class.
  *
- * Written by tracy255.
+ * @author tracy255, Caleb Tracy.
  */
 
 /**
  * IRepresentative interface provides the outline for a representative class.
+ *
  */
 public interface IRepresentative {
 

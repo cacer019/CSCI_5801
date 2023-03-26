@@ -72,7 +72,7 @@ class BallotTest {
     void updateBallotNoCands(){
         ArrayList<String> cands = new ArrayList<String>();
         Ballot blt1 = new Ballot(0,0,cands);
-        assertEquals(blt1.updateBallot, true);
+        assertEquals(blt1.updateBallot(), true);
     }
 
 }

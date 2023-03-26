@@ -3,7 +3,7 @@
  * related methods on them to be used during an IR election.
  * Ballot objects represent ballots in an IR election and are associated with Candidates.
  *
- * Written by tracy255.
+ * @author tracy255, Caleb Tracy.
  */
 
 import java.util.ArrayList;

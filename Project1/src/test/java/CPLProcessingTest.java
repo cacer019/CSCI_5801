@@ -43,12 +43,47 @@ class CPLProcessingTest {
     }
 
     /**
-     * Tests the setParty() method in the CPLProcessing class to make sure
+     * Tests the setParties() method in the CPLProcessing class to make sure
      * a party is created with the correct party name and candidates associated with that party .
      */
     @Test
-    void setParty() {
+    void setParties() {
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
 
+        BufferedReader br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CPLProcessing election = new CPLProcessing(br);     //setParties() called
+
+        ArrayList<Party> parts = election.getParties();     //check if parties are all correct
+        ArrayList<String> cands = new ArrayList<String>();
+
+        cands = <"Foster", "Volz", "Pike">;
+        assertEquals(parts.get(0).getParty(), "Democratic");
+        assertEquals(parts.get(0).getCandidates, cands);
+
+        cands = <"Green", "Xu", "Wang">;
+        assertEquals(parts.get(1).getParty(), "Republican");
+        assertEquals(parts.get(1).getCandidates, cands);
+
+        cands = <"Jacks", "Rosen">;
+        assertEquals(parts.get(2).getParty(), "New Wave");
+        assertEquals(parts.get(2).getCandidates, cands);
+
+        cands = <"McClure", "Berg">;
+        assertEquals(parts.get(3).getParty(), "Reform");
+        assertEquals(parts.get(3).getCandidates, cands);
+
+        cands = <"Zheng", "Melvin">;
+        assertEquals(parts.get(4).getParty(), "Green");
+        assertEquals(parts.get(4).getCandidates, cands);
+
+        cands = <"Peters">;
+        assertEquals(parts.get(5).getParty(), "Independent");
+        assertEquals(parts.get(5).getCandidates, cands);
     }
 
     /**

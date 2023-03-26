@@ -15,9 +15,21 @@ import java.util.ArrayList;
  */
 public class Party implements IRepresentative {
 
+    /**
+     * Arraylist of strings, name of each candidate in order.
+     */
     private ArrayList<String> candidates;
+    /**
+     * Integer, number of seats available
+     */
     private int numSeats;
+    /**
+     * String for the party's name
+     */
     private String partyName;
+    /**
+     * Integer, number of ballots currently allocated to this party
+     */
     private int ballotCount;
 
     /**

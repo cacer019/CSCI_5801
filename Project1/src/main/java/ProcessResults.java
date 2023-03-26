@@ -22,6 +22,9 @@ import java.io.BufferedWriter;
  */
 public class ProcessResults {
 
+    /**
+     * File type, holds the file being used for the audit during the duration of election processing.
+     */
     private File auditFile;
 
     /**
@@ -66,7 +69,7 @@ public class ProcessResults {
     /**
      * Writes the number of candidates to the audit file.
      * @param num  the number of candidates in the election as a String.
-     * @throws IOException
+     * @throws IOException if the audit file cannot be written into
      */
     void addCandidateAmount(String num) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);

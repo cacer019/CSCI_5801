@@ -28,5 +28,4 @@ csv file if it is not under "Project1/".
 
 ### Special case: Audit file location
 The csv file will be placed alongside the current working directory, which should be 
-Project1.
-
+Project1. If using IntelliJ you can see it alongside .gitignore and README.md.

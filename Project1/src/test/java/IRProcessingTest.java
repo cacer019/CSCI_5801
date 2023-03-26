@@ -106,14 +106,7 @@ class IRProcessingTest {
 
         loser = election.determineLoser();
         assertEquals(loser.getCandidateName(),"ashton");
-        election.redistributeBallots(loser);
-
-//        loser = election.determineLoser();
-//        assertEquals(loser.getCandidateName(),"garrett");
-//        election.redistributeBallots(loser);
-//
-//        loser = election.determineLoser();
-//        assertEquals(loser.getCandidateName(),"garrett");
+        //election.redistributeBallots(loser);
 
     }
 

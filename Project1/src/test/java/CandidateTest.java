@@ -16,18 +16,25 @@ import static org.junit.jupiter.api.Assertions.*;
 class CandidateTest {
 
     /**
-     * Tests if Candidate constructor properly creates Candidates
+     * Tests if Candidate constructor properly creates Candidates, normal case
      */
     @Test
-    void candidateTypeChecking() {
+    void candidateTypeChecking1() {
         Candidate cand1 = new Candidate("party name", "joe biden");
         assertEquals(cand1.getParty(),"party name");
         assertEquals(cand1.getCandidateName(),"joe biden");
+    }
 
+    /**
+     * Tests if Candidate constructor properly creates Candidates, abnormal characters case
+     */
+    @Test
+    void candidateTypeChecking2() {
         Candidate cand2 = new Candidate("a123&", "a123&");
         assertEquals(cand2.getParty(),"a123&");
         assertEquals(cand2.getCandidateName(),"a123&");
     }
+
 
     /**
      * Tests the addBallot() and removeBallot() methods in the Candidate class.

@@ -7,22 +7,36 @@ import java.util.Collections;
 public class CPLProcessing implements IElectionProcessing {
 
     private ArrayList<Party> parties;
+    private int numParties;
+    private int numAvailableSeats;
+    private int numBallots;
 
-    private void distributeSeats(BufferedReader br) throws IOException {
+    public CPLProcessing(BufferedReader br) throws IOException {
+        this.parties = new ArrayList<>();
+        setParties(br);
+        try {
+            distributeBallots(br, this.parties);
+            distributeSeats();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        processElection();
+    }
+
+    private void distributeSeats() {
         // Calculates quota by dividing number of seats by the number of ballots.
-        int numSeats = Integer.parseInt(br.readLine());
-        int numBallots = Integer.parseInt(br.readLine());
-        int quota = numBallots / numSeats;
+
+        int quota = getNumBallots() / getNumAvailableSeats();
 
         ArrayList<Integer> remainders = new ArrayList<>();
         // Allocates seats to parties based on quota and calculates the remainders
-        for (Party party : parties) {
+        for (Party party : this.parties) {
             party.setNumSeats(party.getBallotCount() / quota);
-            numSeats -= party.getBallotCount() / quota;
+            setNumAvailableSeats(getNumAvailableSeats() - party.getBallotCount() / quota);
             remainders.add(party.getBallotCount() % quota);
         }
         // Allocates the rest of the seats based on highest remainder
-        while (numSeats > 0) {
+        while (getNumAvailableSeats() > 0) {
             int highestRemainder = Collections.max(remainders);
             int seatIndex = remainders.indexOf((highestRemainder));
             // Checks to see if there is a tie for remainder
@@ -39,18 +53,19 @@ public class CPLProcessing implements IElectionProcessing {
                 // Chooses from select group of parties that tied for highest remainder of ballots
                 int randomNum = (int)(Math.random() * tiedIndexes.size());
                 int chosenIndex = tiedIndexes.get(randomNum);
-                parties.get(chosenIndex).setNumSeats(parties.get(chosenIndex).getNumSeats() + 1);
+                this.parties.get(chosenIndex).setNumSeats(this.parties.get(chosenIndex).getNumSeats() + 1);
             } else {
                 // Adds seat with the highest remainder
-                parties.get(seatIndex).setNumSeats(parties.get(seatIndex).getNumSeats() + 1);
+                this.parties.get(seatIndex).setNumSeats(this.parties.get(seatIndex).getNumSeats() + 1);
             }
-            numSeats--;
+            setNumAvailableSeats(getNumAvailableSeats() - 1);
         }
     }
 
     private void setParties(BufferedReader br) throws IOException {
         // Gets number if parties (2nd Line)
         int numParties = Integer.parseInt(br.readLine());
+        setNumParties(numParties);
         // Gets list of party names (3rd line)
         String curLine = br.readLine();
         String[] partyNames = curLine.split(",");
@@ -63,22 +78,18 @@ public class CPLProcessing implements IElectionProcessing {
         }
     }
 
-    private void distributeBallots(BufferedReader br, Party[] parties) throws IOException {
+    private void distributeBallots(BufferedReader br, ArrayList<Party> parties) throws IOException {
 
-        // Determine where total ballot # is located
-        // Guaranteed lines are CPL identifier, # of parties, Parties, # of seats, and candidates
-        int ballotNumLine = 5 + parties.length;
+        // Reads number of available seats
+        int numSeats = Integer.parseInt(br.readLine());
+        setNumAvailableSeats(numSeats);
 
-        // Skip to line before # of ballots are located in file using int lineSkip
-        for(int i = 0; i < ballotNumLine; i++){
-            br.readLine();
-        }
-
-        // Step into line with ballot # & Store # of ballots
-        int totalBallots = Integer.parseInt(br.readLine());
+        // Reads number of ballots that were submitted
+        int numBallots = Integer.parseInt(br.readLine());
+        setNumBallots(numBallots);
 
         // Iterate through each line and look for ballot vote position
-        for(int i = 0; i < totalBallots; i++){
+        for(int i = 0; i < getNumBallots(); i++){
 
             // Go char by char for each ballot make string 1st
             String currentBallot = br.readLine();
@@ -94,14 +105,44 @@ public class CPLProcessing implements IElectionProcessing {
 
                 else if(ballotArray[j] == '1'){
                     // Unsure here if we can do this, maybe we create setter in Party class to set ballot count
-                    parties[j].setBallotCount(parties[j].getBallotCount() + 1);
+                    parties.get(j).setBallotCount(parties.get(j).getBallotCount() + 1);
                 }
             }
         }
     }
     @Override
-    public boolean processElection(BufferedReader br) {
-        return false;
+    public String processElection() {
+        System.out.println("---------- Seats that are allocated ----------");
+        for (Party party : parties) {
+            for (int i = 0; i < party.getNumSeats(); i++) {
+                System.out.println(party.getCandidates().get(i) + " (" + party.getParty() + ")");
+            }
+        }
+        return "SUCCESS";
+    }
+
+    public int getNumParties() {
+        return this.numParties;
+    }
+
+    public void setNumParties(int numParties) {
+        this.numParties = numParties;
+    }
+
+    public int getNumAvailableSeats() {
+        return this.numAvailableSeats;
+    }
+
+    public void setNumAvailableSeats(int numSeats) {
+        this.numAvailableSeats = numSeats;
+    }
+
+    public int getNumBallots() {
+        return this.numBallots;
+    }
+
+    public void setNumBallots(int numBallots) {
+        this.numBallots = numBallots;
     }
 
     @Override

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class BallotTest {
 
     /**
-     * Tests the getNextCandidate() and updateBallot() methods in the Ballot class.
+     * Tests the getNextCandidate(), updateBallot(), and getNumRankings() methods in the Ballot class.
      */
     @Test
     void getNextCandidateAndUpdate() {
@@ -49,7 +49,8 @@ class BallotTest {
     }
 
     /**
-     * Tests the getIndex() method in the Ballot class.
+     * Tests the getIndex() method in the Ballot class, and that ballots are created with the
+     * correct ballotIndex.
      */
     @Test
     void getIndex() {

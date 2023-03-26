@@ -13,7 +13,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * main class where user will be prompted and election system will be run.
+ * main class where user will be prompted for election information file
+ * and election system will be run.
  */
 public class main {
     /**

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CandidateTest {
 
     /**
-     * Tests if Candidate constructor properly sets Candidate name party name.
+     * Tests if Candidate constructor properly creates Candidates
      */
     @Test
     void candidateTypeChecking() {
@@ -30,7 +30,7 @@ class CandidateTest {
     }
 
     /**
-     * Tests the addBallot() and removeBallot() methods in the Candidate class.
+     * Tests the addBallot(), removeBallot(), and getBallotCount() methods in the Candidate class.
      */
     @Test
     void addRemoveBallot() {

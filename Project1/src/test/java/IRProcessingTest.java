@@ -19,7 +19,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class IRProcessingTest {
 
     /**
-     * Tests the processElection() method in the IRProcessing class.
+     * Tests the processElection(), getCandidates(), setCandidates(), and
+     * getCandidateArray() methods in the IRProcessing class.
+     * The IRProcessing constructor calls setCandidate(), so we test that the candidates
+     * in the IRProcessing instance were created properly, and therefore test setCandidate().
      * @throws IOException  if IO exception occurs when reading from csv file.
      */
     @Test

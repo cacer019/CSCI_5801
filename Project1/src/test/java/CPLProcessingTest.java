@@ -32,13 +32,22 @@ class CPLProcessingTest {
         }
         CPLProcessing election = new CPLProcessing(br);
 
-        String[] parties = election.getParties();
-        assertEquals("Democratic", parties[0]);
-        assertEquals("Republican", parties[1]);
-        assertEquals("New Wave", parties[2]);
-        assertEquals("Reform", parties[3]);
-        assertEquals("Green", parties[4]);
-        assertEquals("Independent", parties[5]);
+        assertEquals("Foster,Green,McClure,", election.processElection());
+
+    }
+
+    @Test
+    void getCandidates() {
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+
+        BufferedReader br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CPLProcessing election = new CPLProcessing(br);
+
 
         String[] candidates = election.getCandidates();
 
@@ -55,16 +64,26 @@ class CPLProcessingTest {
         assertEquals("Zheng", candidates[10]);
         assertEquals("Melvin", candidates[11]);
         assertEquals("Peters", candidates[12]);
-
-        assertEquals("Foster,Green,McClure,", election.processElection());
-
-    }
-
-    @Test
-    void getCandidates() {
     }
 
     @Test
     void getParties() {
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+
+        BufferedReader br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CPLProcessing election = new CPLProcessing(br);
+
+        String[] parties = election.getParties();
+        assertEquals("Democratic", parties[0]);
+        assertEquals("Republican", parties[1]);
+        assertEquals("New Wave", parties[2]);
+        assertEquals("Reform", parties[3]);
+        assertEquals("Green", parties[4]);
+        assertEquals("Independent", parties[5]);
     }
 }

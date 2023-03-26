@@ -172,7 +172,7 @@ public class ProcessResults {
      * @param quota The quota used to determine remainder winner.
      * @throws IOException IOException IOException Throws IOException with null as its error detail message.
      */
-    void addSeat(Int seatNums, String party, int partyBallots, int quota) throws IOException {
+    void addSeat(int seatNums, String party, int partyBallots, int quota) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write(seatNums +" SEATS ALLOCATED TO:\n+++ : " + party + "TOTAL BALLOTS TO PARTY: " + partyBallots+ "LARGEST REMAINDER QUOTA: " + "quota" + "\n");

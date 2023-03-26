@@ -21,7 +21,7 @@ public class main {
      * @throws IOException  when getInput() or checkArgs() throws an exception.
      */
     public static void main(String[] args) throws IOException {
-        System.out.println("------MAIN INITIALIZED------");
+        System.out.println("------ELECTION PROCESSING PROGRAM RUNNING------");
         Boolean checkReturn;
         if(args.length == 0) {
             System.out.println("------Getting input------");

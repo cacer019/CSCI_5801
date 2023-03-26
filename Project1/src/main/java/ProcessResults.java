@@ -8,6 +8,7 @@
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.io.PrintWriter;
 import java.io.FileWriter;
@@ -140,10 +141,10 @@ public class ProcessResults {
      * @param partyBallots number of ballots in a party.
      * @throws IOException Throws IOException with null as its error detail message.
      */
-    void addParty(String party, String candidates, int partyBallots) throws IOException {
+    void addParty(String party, ArrayList candidates, int partyBallots) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
         BufferedWriter bw = new BufferedWriter(fw);
-        bw.write("New Party:\n+++Party name: " + party + "\n+++Party Candidates: " + candidates + "\n");
+        bw.write("New Party:\n+++Party name: " + party + "\n+++Party Candidates: " + candidates.toString() + "\n");
         bw.write("+++Initial Party ballot count: " + Integer.toString(partyBallots) + "\n");
         bw.close();
     }
@@ -200,7 +201,7 @@ public class ProcessResults {
      * @param party This is the party that won the remainder.
      * @throws IOException IOException IOException Throws IOException with null as its error detail message.
      */
-    void addRemainder(String party, int remainder) throws IOException {
+    void addRemainder(String party) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write("REMAINING SEAT ALLOCATED TO:\n+++ : " + party + " DUE TO HIGHER REMAINDER" + "\n");

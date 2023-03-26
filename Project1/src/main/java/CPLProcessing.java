@@ -25,6 +25,7 @@ public class CPLProcessing implements IElectionProcessing {
     private int numSeats;
     private int numBallots;
     private int numCandidates;
+    ProcessResults auditFileOutput;
     /**
      * This is the constructor of a CPLProcessing object. It requires a location to the CPL election file. When this
      * constructor is called the processing of a CPL election as a whole is executed.
@@ -33,6 +34,8 @@ public class CPLProcessing implements IElectionProcessing {
      * @throws IOException Throws IOException with null as its error detail message.
      */
     public CPLProcessing(BufferedReader br) throws IOException {
+        auditFileOutput = new ProcessResults("CPL");
+        auditFileOutput.addVotingType("Closed-Party-List");
         this.parties = new ArrayList<>();
         setParties(br);
         try {
@@ -41,13 +44,16 @@ public class CPLProcessing implements IElectionProcessing {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        for(Party curParty : this.parties) {
+            auditFileOutput.addParty(curParty.getParty(), curParty.getCandidates(), curParty.getBallotCount());
+        }
         processElection();
     }
     /**
      * The distributeSeats method goes through each party in the election and allocates seats to each party according
      * to the calculated vote quota. This method also handles ties in a fair manner through random number generation.
      */
-    private void distributeSeats() {
+    private void distributeSeats() throws IOException {
         // Calculates quota by dividing number of seats by the number of ballots.
 
         int quota = getNumBallots() / getNumSeats();
@@ -57,6 +63,7 @@ public class CPLProcessing implements IElectionProcessing {
         // Allocates seats to parties based on quota and calculates the remainders
         for (Party party : this.parties) {
             party.setNumSeats(party.getBallotCount() / quota);
+            auditFileOutput.addSeat(party.getNumSeats(), party.getParty(), party.getBallotCount(), quota);
             numAvailableSeats -= party.getBallotCount() / quota;
             remainders.add(party.getBallotCount() % quota);
         }
@@ -79,10 +86,16 @@ public class CPLProcessing implements IElectionProcessing {
                 int randomNum = (int)(Math.random() * tiedIndexes.size());
                 int chosenIndex = tiedIndexes.get(randomNum);
                 this.parties.get(chosenIndex).setNumSeats(this.parties.get(chosenIndex).getNumSeats() + 1);
+                String tiedCandidates = "";
+                for(int i = 0; i < tiedIndexes.size(); i++){
+                    tiedCandidates = tiedCandidates + tiedIndexes.get(i) + " ";
+                }
+                auditFileOutput.addTie(tiedCandidates, this.parties.get(chosenIndex).getParty());
                 remainders.set(chosenIndex, 0);
             } else {
                 // Adds seat with the highest remainder
                 this.parties.get(seatIndex).setNumSeats(this.parties.get(seatIndex).getNumSeats() + 1);
+                auditFileOutput.addRemainder(this.parties.get(seatIndex).getParty());
                 remainders.set(seatIndex, 0);
             }
             numAvailableSeats--;
@@ -175,6 +188,11 @@ public class CPLProcessing implements IElectionProcessing {
                 String candidateWinner = party.getCandidates().get(i);
                 seatWinners += candidateWinner + ",";
                 System.out.println(candidateWinner + " (" + party.getParty() + ")");
+                try {
+                    auditFileOutput.addSeatWinner(party.getParty(), party.getCandidates().get(i), party.getBallotCount());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return seatWinners;

@@ -85,6 +85,7 @@ class PartyTest {
         ArrayList<String> candidates = new ArrayList<>();
         Party party = new Party("party", candidates);
 
+
         party.setNumSeats(3);
         assertEquals(party.getNumSeats(), 3);
 
@@ -93,6 +94,11 @@ class PartyTest {
 
         party.setNumSeats(0);
         assertEquals(party.getNumSeats(), 0);
+
+        party.setNumSeats(10);
+        assertFalse(party.getNumSeats() == -1);
+        assertTrue(party.getNumSeats() == 10);
+
     }
 
     /**

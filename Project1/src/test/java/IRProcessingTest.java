@@ -112,14 +112,62 @@ class IRProcessingTest {
 //     * Tests the determineLoser() method in the IRProcessing class.
 //     */
 //    @Test
-//    void determineLoser() {
+//    void determineLoser() throws IOException{
+//        FileReader csvFile = new FileReader("src/test/java/IRTesting4.csv");
+//
+//        BufferedReader br = new BufferedReader(csvFile);
+//        try {
+//            br.readLine();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        IRProcessing election = new IRProcessing(br);
+
+//        Candidate loser;
+//        loser = election.determineLoser();
+//        assertEquals(loser.getCandidateName(),"bob");
+//        election.redistributeBallots(loser);
+
+//        loser = election.determineLoser();
+//        assertEquals(loser.getCandidateName(),"elias");
+//        election.redistributeBallots(loser);
+//
+//        loser = election.determineLoser();
+//        assertEquals(loser.getCandidateName(),"garrett");
+//        election.redistributeBallots(loser);
+//
+//        loser = election.determineLoser();
+//        assertEquals(loser.getCandidateName(),"garrett");
+//
+//
+//
+//
 //    }
 //
 //    /**
 //     * Tests the redistributeBallots() method in the IRProcessing class.
 //     */
 //    @Test
-//    void redistributeBallots() {
+//    void redistributeBallots() throws IOException{
+//        FileReader csvFile = new FileReader("src/test/java/IRTesting3.csv");
 //
+//        BufferedReader br = new BufferedReader(csvFile);
+//        try {
+//            br.readLine();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//        IRProcessing election = new IRProcessing(br);
+//
+//        String[] cands1 = election.getCandidates();
+//        assertEquals(cands[0].getBallotCount(), 4);
+//        assertEquals(cands[1].getBallotCount(), 2);
+//        assertEquals(cands[2].getBallotCount(), 3);
+//
+//
+//        election.redistributeBallots(election.determineLoser());
+//        String[] cands2 = election.getCandidates();
+//        assertEquals(cands[0].getBallotCount(), 5);
+//        assertEquals(cands[1].getBallotCount(), 4);
 //    }
 }

@@ -35,7 +35,7 @@ public class main {
         else {
             checkReturn = checkArgs(args[1]);
             if (!checkReturn) {
-                System.out.println("------CHECKARGS FAILURE------");
+                System.out.println("------PROVIDED FILENAME IS INCORRECT------");
             }
         }
 
@@ -82,11 +82,13 @@ public class main {
         }
         if (electionType.equals("CPL")) {
             //runs processElection() in the constructor
+            System.out.println("------Running Closed Party List Election------");
             CPLProcessing CPLElection = new CPLProcessing(myReader);
             return true;
         }
         else if (electionType.equals("IR")) {
             //runs processElection() in the constructor
+            System.out.println("------Running Instant Runoff Vote Election------");
             IRProcessing IRElection = new IRProcessing(myReader);
             return true;
         }

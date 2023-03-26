@@ -274,7 +274,7 @@ public class CPLProcessing implements IElectionProcessing {
 
     /**
      * Gets an ArrayList of Party classes
-     * @return  an ArrayList<Party> containing Party classes, which contain various information.
+     * @return  an ArrayList of parties containing Party classes, which contain various information.
      */
     public ArrayList<Party> getParties() {
         return this.parties;

@@ -38,7 +38,7 @@ public class Ballot {
 
     /**
      * Gets the current first vote candidate on a ballot.
-     * Since ArrayList<String> candidates is in order of the ballot vote rank,
+     * Since the ArrayList of candidates is in order of the ballot vote rank,
      * the candidate in the first index of candidates is the first vote candidate.
      * Used when a candidate is being eliminated and ballots are being redistributed
      * to find the next candidate in the voting rank order.

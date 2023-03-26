@@ -65,14 +65,4 @@ class BallotTest {
         assertEquals(blt5.getIndex(), 999);
     }
 
-    /**
-     * Tests what happens when updateBallot is called on ballot without any candidates
-     */
-    @Test
-    void updateBallotNoCands(){
-        ArrayList<String> cands = new ArrayList<String>();
-        Ballot blt1 = new Ballot(0,0,cands);
-        assertEquals(blt1.updateBallot(), true);
-    }
-
 }

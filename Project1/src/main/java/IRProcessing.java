@@ -64,10 +64,10 @@ public class IRProcessing implements IElectionProcessing {
     @Override
     public String processElection() {
         while(candidates.size() > 0) {
-            System.out.println("totalnumballots: " + totalNumBallots);
+            //System.out.println("totalnumballots: " + totalNumBallots);   //debugging
             for (Candidate curCand : candidates) {
                 //check if there is a winner with a majority number of ballots
-                System.out.println("curcandcunt -> " + curCand.getCandidateName() + ": " + curCand.getBallotCount());
+                //System.out.println("curcandcount -> " + curCand.getCandidateName() + ": " + curCand.getBallotCount());  //debugging
                 if (curCand.getBallotCount() > (totalNumBallots * 0.5)) {
                     //winner is candidate
                     try {

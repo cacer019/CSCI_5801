@@ -9,12 +9,17 @@ have package declarations.
 SDK version is 17.
 This project uses Gradle library manager.
 
-### Project Structure
+### Project Structure (test and source files in new location)
 Project structure differs from expected team directory structure. Rather than a src
 and testing subdirectory underneath the Project1 directory, src contains main
 (equivalent of src in expected directed) and test (equivalent of testing in expected
 directory). Each contains a "java" subdirectory where java files and csv files for
 testing are stored. Otherwise, the file structure meets expectations.
+
+### Special case: Testing
+As instructed csv test files for system testing were moved in the "testing" directory
+underneath "Project1". They are necessary for running the tests within CPLProcessingTest 
+and IRProcessingText files and must be moved back into those folders if those tests are ran.
 
 ### Special case: CSV file location
 Any csv file used for running the program should be located in the working directory
@@ -22,6 +27,6 @@ which is assumed to be Project1. The checkArgs() method in main will not locate 
 csv file if it is not under "Project1/".
 
 ### Special case: Audit file location
-The csv file will be placed under the current working directory, which should be 
+The csv file will be placed alongside the current working directory, which should be 
 Project1.
 

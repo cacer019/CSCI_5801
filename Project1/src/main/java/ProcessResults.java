@@ -26,6 +26,7 @@ public class ProcessResults {
 
     /**
      * Creates an audit file for election results and proceedings.
+     * @param electionType String contained IR or CPL
      * @throws IOException  if IO error occurs when creating the audit file.
      */
     public ProcessResults(String electionType) throws IOException {
@@ -178,7 +179,7 @@ public class ProcessResults {
     void addSeat(int seatNums, String party, int partyBallots, int quota) throws IOException {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
         BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(seatNums +" SEATS ALLOCATED TO:\n+++ : " + party + "TOTAL BALLOTS TO PARTY: " + partyBallots+ "LARGEST REMAINDER QUOTA: " + "quota" + "\n");
+        bw.write(seatNums +" SEATS ALLOCATED TO:\n+++ : " + party + "\nTOTAL BALLOTS TO PARTY: " + Integer.toString(partyBallots) + "\nLARGEST REMAINDER QUOTA: " + Integer.toString(quota) + "\n");
         bw.write("\n\n\n");
         bw.close();
     }
@@ -193,7 +194,7 @@ public class ProcessResults {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write("TIED PARTIES:\n+++ " + tiedParties);
-        bw.write("WINNER OF TIE:\n+++ " + chosenWinner);
+        bw.write("WINNER OF TIE: " + chosenWinner);
         bw.write("\n\n\n");
         bw.close();
     }

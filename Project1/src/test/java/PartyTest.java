@@ -1,7 +1,7 @@
 /**
  * PartyTest.java is used for testing the methods in the Party class.
  *
- * Written by abouz009 and berg00063.
+ * @author abouz009 and berg00063.
  */
 
 import org.junit.jupiter.api.Test;

@@ -1,8 +1,9 @@
+
 /**
  * IRProcessing.java defines the IRProcessing class, which is used to process an IR election
  * and determine its results while documenting the course of the election processing.
  *
- * Written by tracy255, ber00063.
+ * @author tracy255, ber00063.
  */
 
 import java.io.BufferedReader;
@@ -30,7 +31,6 @@ public class IRProcessing implements IElectionProcessing {
      */
     ProcessResults auditFileOutput;
 
-
     /**
      * Calls the setCandidates() and distributeBallots() to set up the processing of an IR
      * election and then calls processElection() to process the election.
@@ -43,10 +43,14 @@ public class IRProcessing implements IElectionProcessing {
     public IRProcessing(BufferedReader br) throws IOException {
         candidates = new ArrayList<>();
 
+        //Create ProcessResults objects for sending info to the audit file
         auditFileOutput = new ProcessResults("IR");
         auditFileOutput.addVotingType("Instant-Runoff");
 
+        //Create candidates for candidates class variable
         setCandidates(br);
+
+        //Try to distribute the ballots, then add candidate info to the audit file
         try {
             distributeBallots(br);
         } catch (IOException e) {
@@ -55,6 +59,8 @@ public class IRProcessing implements IElectionProcessing {
         for(Candidate curCand : candidates) {
             auditFileOutput.addCandidate(curCand.getCandidateName(), curCand.getParty(), curCand.getBallotCount());
         }
+
+        //Start processing results
         processElection();
     }
 
@@ -66,8 +72,10 @@ public class IRProcessing implements IElectionProcessing {
      */
     @Override
     public String processElection() {
+        //This while loop should never end, returns a winner before all candidates eliminated
         while(candidates.size() > 0) {
             //System.out.println("totalnumballots: " + totalNumBallots);   //debugging
+            //Loop through each candidate and check if they are a winner
             for (Candidate curCand : candidates) {
                 //check if there is a winner with a majority number of ballots
                 //System.out.println("curcandcount -> " + curCand.getCandidateName() + ": " + curCand.getBallotCount());  //debugging
@@ -77,7 +85,7 @@ public class IRProcessing implements IElectionProcessing {
                         auditFileOutput.addWinner(curCand.getCandidateName(), curCand.getBallotCount());
                     } catch (IOException e) { throw new RuntimeException(e); }
                     System.out.println("----------WINNER: " + curCand.getCandidateName() + "----------");
-                    return curCand.getCandidateName();
+                    return curCand.getCandidateName();  //currently return is not used
                 }
                 //do not need to account for the possibility of a two-way tie, handled in determineLoser
             }
@@ -89,7 +97,7 @@ public class IRProcessing implements IElectionProcessing {
             //redistributeBallots accordingly, removes losing candidate
             redistributeBallots(loser);
         }
-        return "FAILURE";
+        return "FAILURE";  //should never reach this point
     }
 
     /**
@@ -97,6 +105,7 @@ public class IRProcessing implements IElectionProcessing {
      * @return  a String[] containing the political parties of candidates as Strings
      */
     public String[] getParties() {
+        //Used for debugging
         String[] partyStrings = new String[candidates.size()];
         for(int i = 0; i < candidates.size(); i++){
             partyStrings[i] = candidates.get(i).getParty();
@@ -132,7 +141,7 @@ public class IRProcessing implements IElectionProcessing {
      *            from the election information csv file
      */
     private void setCandidates(BufferedReader br) {
-        //Read the second line (candidates
+        //Get the 2nd line of CSV file
         String curLine;
         try {
             //read the number of candidates, then the names
@@ -266,7 +275,6 @@ public class IRProcessing implements IElectionProcessing {
             System.out.println("ballot " + curBallot.getIndex() + " : " + curBallot.getNumRankings());
             boolean updateBallotResult = curBallot.updateBallot(); //update ballot
             if (!updateBallotResult) {  //if false is returned, delete this ballot (no more rankings)
-                //TODO: use getIndex() for audit file
                 //remove this ballot by ignoring it, once this candidate is deleted
                 //the ballots are destroyed by the garbage collector
                 System.out.println("REMOVED A BALLOT");
@@ -284,7 +292,6 @@ public class IRProcessing implements IElectionProcessing {
                     }
                     updateBallotResult = curBallot.updateBallot();
                     if (!updateBallotResult) {  //if false is returned, delete this ballot (no more rankings)
-                        //TODO: use getIndex() for audit file
                         //remove this ballot by ignoring it, once this candidate is deleted
                         //the ballots are destroyed by the garbage collector
                         System.out.println("REMOVED A BALLOT - 2");

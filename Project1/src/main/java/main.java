@@ -1,3 +1,4 @@
+
 /**
  * main.java is the main file for CSCI 5801 Project 3: Waterfall Implementation & Testing.
  * This is where the user is prompted for the election file, the type of election is determined,
@@ -22,26 +23,27 @@ public class main {
      */
     public static void main(String[] args) throws IOException {
         System.out.println("------ELECTION PROCESSING PROGRAM RUNNING------");
-        Boolean checkReturn;
+        Boolean checkReturn;  //Used to determine if the current input it valid
         if(args.length == 0) {
-            System.out.println("------Getting input------");
+            System.out.println("------Input filename from working directory. Format: 'FileName'.csv------");
             String fileName = getInput();
             checkReturn = checkArgs(fileName);
         }
-        else if(args.length > 1) {
+        else if(args.length > 1) {  //More inputs than the filename were given
             System.out.println("------Please only input the filename------");
             checkReturn = false;
         }
         else {
+            //In the case only one input is provided
             checkReturn = checkArgs(args[1]);
-            if (!checkReturn) {
+            if (!checkReturn) {  //Check if the name is valid
                 System.out.println("------PROVIDED FILENAME IS INCORRECT------");
             }
         }
 
         if (!checkReturn) {
             for(int i = 0; i < 10; i++) {
-                System.out.println("------Input filename from working directory. Format: 'FileName'.csv------");
+                System.out.println("------INVALID FILENAME: Input filename from working directory. Format: 'FileName'.csv------");
                 String fileName = getInput();
                 checkReturn = checkArgs(fileName);
                 if(checkReturn == true) {
@@ -63,6 +65,7 @@ public class main {
     private static boolean checkArgs(String fileName) throws IOException {
         String path = "Project1/" + fileName;
         File f = new File(path);
+        //Check if the file exists
         if(f.exists()) {
             System.out.println("file exists!");
         }
@@ -72,6 +75,7 @@ public class main {
         }
         FileReader csvFile = new FileReader(path);
         //If file cannot be found, throw an exception.
+        //Extract the election type from the CSV file (first line)
         String electionType;
         BufferedReader myReader = new BufferedReader(csvFile);
         try {
@@ -80,6 +84,8 @@ public class main {
             System.out.println("File cannot be found.\nFile-name provided: " + fileName);
             throw new RuntimeException(e);
         }
+
+        //Create a processing class object accordingly and pass on the BufferedReader object
         if (electionType.equals("CPL")) {
             //runs processElection() in the constructor
             System.out.println("------Running Closed Party List Election------");
@@ -101,9 +107,10 @@ public class main {
      * @throws IOException  when IO error occurs.
      */
     private static String getInput() throws IOException {
+        //Read the user input from terminal
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
         String file = inputReader.readLine();
-        //System.out.println("filename: " + file);
+        //System.out.println("filename: " + file);  //debugging
         return file;
     }
 

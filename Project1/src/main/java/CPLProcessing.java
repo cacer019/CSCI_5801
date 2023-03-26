@@ -10,6 +10,7 @@ public class CPLProcessing implements IElectionProcessing {
     private int numParties;
     private int numAvailableSeats;
     private int numBallots;
+    private int numCandidates;
 
     public CPLProcessing(BufferedReader br) throws IOException {
         this.parties = new ArrayList<>();
@@ -54,9 +55,11 @@ public class CPLProcessing implements IElectionProcessing {
                 int randomNum = (int)(Math.random() * tiedIndexes.size());
                 int chosenIndex = tiedIndexes.get(randomNum);
                 this.parties.get(chosenIndex).setNumSeats(this.parties.get(chosenIndex).getNumSeats() + 1);
+                remainders.set(chosenIndex, 0);
             } else {
                 // Adds seat with the highest remainder
                 this.parties.get(seatIndex).setNumSeats(this.parties.get(seatIndex).getNumSeats() + 1);
+                remainders.set(seatIndex, 0);
             }
             setNumAvailableSeats(getNumAvailableSeats() - 1);
         }
@@ -70,12 +73,19 @@ public class CPLProcessing implements IElectionProcessing {
         String curLine = br.readLine();
         String[] partyNames = curLine.split(",");
         // Reads candidates of each party and creates a Party object with respective party name and candidates
+        int numCandidates = 0;
         for (int i = 0; i < numParties; i++) {
             curLine = br.readLine();
-            ArrayList<String> candidatesOfParty = new ArrayList<>(Arrays.asList(curLine.split(";")));
-            Party party = new Party(partyNames[i], candidatesOfParty);
+            ArrayList<String> candidatesOfParty = new ArrayList<>(Arrays.asList(curLine.split(",")));
+            // Removes extra spaces at beginning of candidate name
+            for (int j = 0; j < candidatesOfParty.size(); j++) {
+                candidatesOfParty.set(j, candidatesOfParty.get(j).trim());
+            }
+            numCandidates += candidatesOfParty.size();
+            Party party = new Party(partyNames[i].trim(), candidatesOfParty);
             this.parties.add(party);
         }
+        setNumCandidates(numCandidates);
     }
 
     private void distributeBallots(BufferedReader br, ArrayList<Party> parties) throws IOException {
@@ -112,13 +122,16 @@ public class CPLProcessing implements IElectionProcessing {
     }
     @Override
     public String processElection() {
+        String seatWinners = "";
         System.out.println("---------- Seats that are allocated ----------");
         for (Party party : parties) {
             for (int i = 0; i < party.getNumSeats(); i++) {
-                System.out.println(party.getCandidates().get(i) + " (" + party.getParty() + ")");
+                String candidateWinner = party.getCandidates().get(i);
+                seatWinners += candidateWinner + ",";
+                System.out.println(candidateWinner + " (" + party.getParty() + ")");
             }
         }
-        return "SUCCESS";
+        return seatWinners;
     }
 
     public int getNumParties() {
@@ -145,15 +158,36 @@ public class CPLProcessing implements IElectionProcessing {
         this.numBallots = numBallots;
     }
 
+    public int getNumCandidates() {
+        return this.numCandidates;
+    }
+
+    public void setNumCandidates(int num) {
+        this.numCandidates = num;
+    }
+
     @Override
     // Not used
     public String[] getCandidates() {
-        return new String[0];
+        String[] candidateStrings = new String[numCandidates];
+        int index = 0;
+        for (int i = 0; i < this.parties.size(); i++) {
+            ArrayList<String> candidates = parties.get(i).getCandidates();
+            for (String candidate : candidates) {
+                candidateStrings[index] = candidate;
+                        index++;
+            }
+        }
+        return candidateStrings;
     }
 
     @Override
     // Not used
     public String[] getParties() {
-        return new String[0];
+        String[] partyStrings = new String[this.parties.size()];
+        for (int i = 0; i < this.parties.size(); i++) {
+            partyStrings[i] = parties.get(i).getParty();
+        }
+        return partyStrings;
     }
 }

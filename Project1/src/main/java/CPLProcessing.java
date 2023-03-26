@@ -236,6 +236,10 @@ public class CPLProcessing implements IElectionProcessing {
         this.numCandidates = num;
     }
 
+    /**
+     * Gets a list of the candidates in the election.
+     * @return  a String[] containing the names of the candidates as Strings.
+     */
     @Override
     public String[] getCandidates() {
         String[] candidateStrings = new String[getNumCandidates()];
@@ -250,6 +254,10 @@ public class CPLProcessing implements IElectionProcessing {
         return candidateStrings;
     }
 
+    /**
+     * Gets an ArrayList of Party classes
+     * @return  an ArrayList<Party> containing Party classes, which contain various information.
+     */
     public ArrayList<Party> getParties() {
         return this.parties;
     }

@@ -45,7 +45,7 @@ public class CPLProcessing implements IElectionProcessing {
     }
     /**
      * The distributeSeats method goes through each party in the election and allocates seats to each party according
-     * to the calculated vote qouta. This method also handles ties in a fair manner through random number generation.
+     * to the calculated vote quota. This method also handles ties in a fair manner through random number generation.
      */
     private void distributeSeats() {
         // Calculates quota by dividing number of seats by the number of ballots.
@@ -250,12 +250,7 @@ public class CPLProcessing implements IElectionProcessing {
         return candidateStrings;
     }
 
-    @Override
-    public String[] getParties() {
-        String[] partyStrings = new String[getNumParties()];
-        for (int i = 0; i < getNumParties(); i++) {
-            partyStrings[i] = parties.get(i).getParty();
-        }
-        return partyStrings;
+    public ArrayList<Party> getParties() {
+        return this.parties;
     }
 }

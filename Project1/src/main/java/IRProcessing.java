@@ -91,7 +91,6 @@ public class IRProcessing implements IElectionProcessing {
      * Gets a list of all the political parties that candidates belong to.
      * @return  a String[] containing the political parties of candidates as Strings
      */
-    @Override
     public String[] getParties() {
         String[] partyStrings = new String[candidates.size()];
         for(int i = 0; i < candidates.size(); i++){

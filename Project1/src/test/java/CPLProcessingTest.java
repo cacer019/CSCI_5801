@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -21,6 +23,7 @@ class CPLProcessingTest {
      */
     @Test
     void distributeSeats() {
+        
     }
 
     /**
@@ -29,14 +32,32 @@ class CPLProcessingTest {
      */
     @Test
     void setParty() {
+
     }
 
     /**
      * Tests the distributeBallots() method in the CPLProcessing class to check that the
-     * ballots are are allocated correctly to their respective parties.
+     * ballots are allocated correctly to their respective parties.
+     * @throws IOException  if IO exception occurs when reading from csv file.
      */
     @Test
-    void distributeBallots() {
+    void distributeBallots() throws IOException {
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+
+        BufferedReader br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CPLProcessing election = new CPLProcessing(br);
+
+        assertEquals(election.getParties().get(0).getBallotCount(), 3);
+        assertEquals(election.getParties().get(1).getBallotCount(), 2);
+        assertEquals(election.getParties().get(2).getBallotCount(), 0);
+        assertEquals(election.getParties().get(3).getBallotCount(), 2);
+        assertEquals(election.getParties().get(4).getBallotCount(), 1);
+        assertEquals(election.getParties().get(5).getBallotCount(), 1);
     }
 
     /**
@@ -112,12 +133,12 @@ class CPLProcessingTest {
         }
         CPLProcessing election = new CPLProcessing(br);
 
-        String[] parties = election.getParties();
-        assertEquals("Democratic", parties[0]);
-        assertEquals("Republican", parties[1]);
-        assertEquals("New Wave", parties[2]);
-        assertEquals("Reform", parties[3]);
-        assertEquals("Green", parties[4]);
-        assertEquals("Independent", parties[5]);
+        ArrayList<Party> parties = election.getParties();
+        assertEquals("Democratic", parties.get(0).getParty());
+        assertEquals("Republican", parties.get(1).getParty());
+        assertEquals("New Wave", parties.get(2).getParty());
+        assertEquals("Reform", parties.get(3).getParty());
+        assertEquals("Green", parties.get(4).getParty());
+        assertEquals("Independent", parties.get(5).getParty());
     }
 }

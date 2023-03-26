@@ -25,9 +25,4 @@ public interface IElectionProcessing {
      */
     public String[] getCandidates();
 
-    /**
-     * Gets the names of the political parties the candidates belong to
-     * @return  a String[] containing the political parties of candidates in the election
-     */
-    public String[] getParties();
 }

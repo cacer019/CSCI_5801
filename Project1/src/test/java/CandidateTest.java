@@ -30,7 +30,7 @@ class CandidateTest {
     }
 
     /**
-     * Tests the addBallot(), removeBallot(), and getBallotCount() methods in the Candidate class.
+     * Tests the addBallot() and removeBallot() methods in the Candidate class.
      */
     @Test
     void addRemoveBallot() {

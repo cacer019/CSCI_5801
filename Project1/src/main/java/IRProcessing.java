@@ -38,7 +38,7 @@ public class IRProcessing implements IElectionProcessing {
     public IRProcessing(BufferedReader br) throws IOException {
         candidates = new ArrayList<>();
 
-        auditFileOutput = new ProcessResults();
+        auditFileOutput = new ProcessResults("IR");
         auditFileOutput.addVotingType("Instant-Runoff");
 
         setCandidates(br);

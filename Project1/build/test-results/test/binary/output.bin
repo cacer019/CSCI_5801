@@ -19,19 +19,19 @@
 curcandcunt -> Chou: 2
 curcandcunt -> Joe: 2
 TIEChou Joe
+ballot 2 : 3
+ballot 8 : 1
+REMOVED A BALLOT
+removed candidate: Chou
+totalnumballots: 9
+curcandcunt -> Rosen: 3
+curcandcunt -> Kleinberg: 4
+curcandcunt -> Joe: 2
 ballot 5 : 1
 REMOVED A BALLOT
 ballot 9 : 1
 REMOVED A BALLOT
 removed candidate: Joe
-totalnumballots: 8
-curcandcunt -> Rosen: 3
-curcandcunt -> Kleinberg: 3
-curcandcunt -> Chou: 2
-ballot 2 : 3
-ballot 8 : 1
-REMOVED A BALLOT
-removed candidate: Chou
 totalnumballots: 7
 curcandcunt -> Rosen: 3
 curcandcunt -> Kleinberg: 4
@@ -40,3 +40,63 @@
 curcandcunt -> Rosen: 3
 curcandcunt -> Kleinberg: 4
 '----------WINNER: Kleinberg----------
+totalnumballots: 9
+curcandcunt -> ashton: 4
+curcandcunt -> caleb: 3
+curcandcunt -> garrett: 2
+ballot 5 : 3
+ballot 6 : 3
+removed candidate: garrett
+totalnumballots: 9
+curcandcunt -> ashton: 5
+$----------WINNER: ashton----------
+ballot 3 : 3
+ballot 4 : 3
+ballot 7 : 3
+ballot 5 : 2
+removed candidate: caleb
+totalnumballots: 11
+curcandcunt -> ashton: 5
+curcandcunt -> caleb: 3
+curcandcunt -> garrett: 2
+curcandcunt -> elias: 1
+curcandcunt -> bob: 0
+removed candidate: bob
+totalnumballots: 11
+curcandcunt -> ashton: 5
+curcandcunt -> caleb: 3
+curcandcunt -> garrett: 2
+curcandcunt -> elias: 1
+ballot 9 : 1
+REMOVED A BALLOT
+removed candidate: elias
+totalnumballots: 10
+curcandcunt -> ashton: 5
+curcandcunt -> caleb: 3
+curcandcunt -> garrett: 2
+ballot 7 : 1
+REMOVED A BALLOT
+ballot 8 : 1
+REMOVED A BALLOT
+removed candidate: garrett
+totalnumballots: 8
+curcandcunt -> ashton: 5
+$----------WINNER: ashton----------
+ballot 4 : 1
+REMOVED A BALLOT
+ballot 5 : 1
+REMOVED A BALLOT
+ballot 6 : 1
+REMOVED A BALLOT
+removed candidate: caleb
+ballot 0 : 1
+REMOVED A BALLOT
+ballot 1 : 1
+REMOVED A BALLOT
+ballot 2 : 1
+REMOVED A BALLOT
+ballot 3 : 1
+REMOVED A BALLOT
+ballot 10 : 1
+REMOVED A BALLOT
+removed candidate: ashton

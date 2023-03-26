@@ -25,13 +25,13 @@ public class ProcessResults {
      * Creates an audit file for election results and proceedings.
      * @throws IOException  if IO error occurs when creating the audit file.
      */
-    public ProcessResults() throws IOException {
+    public ProcessResults(String electionType) throws IOException {
         //get today's today to add onto the file title
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
         String strDate = formatter.format(date);
 
-        String fileName = "auditFile" + strDate + ".txt";
+        String fileName = "auditFile" + electionType + strDate + ".txt";
         File newFile = new File(fileName);
         auditFile = newFile;
         if(!auditFile.exists()) {

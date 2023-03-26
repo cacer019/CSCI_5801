@@ -20,10 +20,26 @@ class CPLProcessingTest {
     /**
      * Tests the distributeSeats() method in the CPLProcessing class to make sure the
      * correct number of seats are allocated to the correct parties.
+     * @throws IOException  if IO exception occurs when reading from csv file.
      */
     @Test
-    void distributeSeats() {
-        
+    void distributeSeats() throws IOException {
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+
+        BufferedReader br = new BufferedReader(csvFile);
+        try {
+            br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CPLProcessing election = new CPLProcessing(br);
+
+        assertEquals(election.getParties().get(0).getNumSeats(), 1);
+        assertEquals(election.getParties().get(1).getNumSeats(), 1);
+        assertEquals(election.getParties().get(2).getNumSeats(), 0);
+        assertEquals(election.getParties().get(3).getNumSeats(), 1);
+        assertEquals(election.getParties().get(4).getNumSeats(), 0);
+        assertEquals(election.getParties().get(5).getNumSeats(), 0);
     }
 
     /**

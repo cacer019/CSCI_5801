@@ -24,22 +24,39 @@ class CPLProcessingTest {
      */
     @Test
     void distributeSeats() throws IOException {
-        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+        FileReader csvFile1 = new FileReader("src/test/java/CPLTesting1.csv");
 
-        BufferedReader br = new BufferedReader(csvFile);
+        BufferedReader br1 = new BufferedReader(csvFile1);
         try {
-            br.readLine();
+            br1.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election = new CPLProcessing(br);
+        CPLProcessing election1 = new CPLProcessing(br1);
 
-        assertEquals(election.getParties().get(0).getNumSeats(), 1);
-        assertEquals(election.getParties().get(1).getNumSeats(), 1);
-        assertEquals(election.getParties().get(2).getNumSeats(), 0);
-        assertEquals(election.getParties().get(3).getNumSeats(), 1);
-        assertEquals(election.getParties().get(4).getNumSeats(), 0);
-        assertEquals(election.getParties().get(5).getNumSeats(), 0);
+        assertEquals(election1.getParties().get(0).getNumSeats(), 1);
+        assertEquals(election1.getParties().get(1).getNumSeats(), 1);
+        assertEquals(election1.getParties().get(2).getNumSeats(), 0);
+        assertEquals(election1.getParties().get(3).getNumSeats(), 1);
+        assertEquals(election1.getParties().get(4).getNumSeats(), 0);
+        assertEquals(election1.getParties().get(5).getNumSeats(), 0);
+
+        FileReader csvFile2 = new FileReader("src/test/java/CPLTesting2.csv");
+
+        BufferedReader br2 = new BufferedReader(csvFile2);
+        try {
+            br2.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        CPLProcessing election2 = new CPLProcessing(br2);
+
+        assertEquals(election2.getParties().get(0).getNumSeats(), 1);
+        assertEquals(election2.getParties().get(1).getNumSeats(), 0);
+        assertEquals(election2.getParties().get(2).getNumSeats(), 0);
+        assertEquals(election2.getParties().get(3).getNumSeats(), 1);
+        assertEquals(election2.getParties().get(4).getNumSeats(), 0);
+        assertEquals(election2.getParties().get(5).getNumSeats(), 1);
     }
 
     /**
@@ -49,7 +66,7 @@ class CPLProcessingTest {
      */
     @Test
     void setParties() throws IOException {
-        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
         try {
@@ -106,7 +123,7 @@ class CPLProcessingTest {
      */
     @Test
     void distributeBallots() throws IOException {
-        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
         try {
@@ -131,7 +148,7 @@ class CPLProcessingTest {
      */
     @Test
     void processElection() throws IOException {
-        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
         try {
@@ -152,7 +169,7 @@ class CPLProcessingTest {
      */
     @Test
     void getCandidates() throws IOException {
-        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
         try {
@@ -187,7 +204,7 @@ class CPLProcessingTest {
      */
     @Test
     void getParties() throws IOException {
-        FileReader csvFile = new FileReader("src/test/java/CPLTesting.csv");
+        FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
         try {

@@ -307,3 +307,4 @@ public class CPLProcessing implements IElectionProcessing {
     public ArrayList<Party> getParties() {
         return this.parties;
     }
+}

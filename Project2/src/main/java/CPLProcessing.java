@@ -77,10 +77,17 @@ public class CPLProcessing implements IElectionProcessing {
         ArrayList<Integer> remainders = new ArrayList<>();
         // Allocates seats to parties based on quota and calculates the remainders
         for (Party party : this.parties) {
-            party.setNumSeats(party.getBallotCount() / quota);
+            int seats = party.getBallotCount() / quota;
+            if (seats >= party.getCandidates().size()) {
+                party.setNumSeats(party.getCandidates().size());
+                numAvailableSeats -= party.getCandidates().size();
+                remainders.add(0);
+            } else {
+                party.setNumSeats(seats);
+                numAvailableSeats -= seats;
+                remainders.add(party.getBallotCount() % quota);
+            }
             auditFileOutput.addSeat(party.getNumSeats(), party.getParty(), party.getBallotCount(), quota);
-            numAvailableSeats -= party.getBallotCount() / quota;
-            remainders.add(party.getBallotCount() % quota);
         }
         // Allocates the rest of the seats based on highest remainder
         while (numAvailableSeats > 0) {
@@ -94,6 +101,12 @@ public class CPLProcessing implements IElectionProcessing {
                     if (remainders.get(i) == highestRemainder) {
                         tiedIndexes.add(i);
                     }
+                }
+            }
+            // Removes parties where all of their candidates have been allocated to seats
+            for (int i = 0; i < tiedIndexes.size(); i++) {
+                if (this.parties.get(tiedIndexes.get(i)).getNumSeats() == this.parties.get(tiedIndexes.get(i)).getCandidates().size()) {
+                    tiedIndexes.remove(i);
                 }
             }
             if (tiedIndexes.size() > 1) {
@@ -281,7 +294,7 @@ public class CPLProcessing implements IElectionProcessing {
             ArrayList<String> candidates = parties.get(i).getCandidates();
             for (String candidate : candidates) {
                 candidateStrings[index] = candidate;
-                        index++;
+                index++;
             }
         }
         return candidateStrings;
@@ -294,4 +307,3 @@ public class CPLProcessing implements IElectionProcessing {
     public ArrayList<Party> getParties() {
         return this.parties;
     }
-}

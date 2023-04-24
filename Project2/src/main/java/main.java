@@ -63,8 +63,16 @@ public class main {
      * @throws FileNotFoundException throws exception if file couldn't be found.
      */
     private static boolean checkArgs(String fileName) throws IOException {
-        String path = "Project1/" + fileName;
-        File f = new File(path);
+        //String path = "Project2/" + fileName;  //Not needed if in Project2 dir
+        File f = new File(fileName);
+
+        //Debugging for finding file name
+        //System.out.println("Working Directory: " + System.getProperty("user.dir"));
+        //System.out.println("File path: " + f.getPath());
+        //List the directory's files, should print files/directories under /Project2
+        //File file = new File(".");
+        //for(String fileNames : file.list()) System.out.println(fileNames);
+
         //Check if the file exists
         if(f.exists()) {
             System.out.println("file exists!");
@@ -73,7 +81,7 @@ public class main {
             System.out.println("file does not exist!");
             return false;
         }
-        FileReader csvFile = new FileReader(path);
+        FileReader csvFile = new FileReader(fileName);
         //If file cannot be found, throw an exception.
         //Extract the election type from the CSV file (first line)
         String electionType;

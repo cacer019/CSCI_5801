@@ -8,6 +8,7 @@
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -30,6 +31,11 @@ public class IRProcessing implements IElectionProcessing {
      * instantiates a ProcessResults instance, which is used to write election proceedings to an audit file.
      */
     ProcessResults auditFileOutput;
+
+    /**
+     * an array of arrayLists, used for each row in the table outputted at the end of an election.
+     * each arrayList has in order: candidate, party, then the number of votes for each round.
+     */
 
     /**
      * Calls the setCandidates() and distributeBallots() to set up the processing of an IR
@@ -56,8 +62,16 @@ public class IRProcessing implements IElectionProcessing {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for(Candidate curCand : candidates) {
-            auditFileOutput.addCandidate(curCand.getCandidateName(), curCand.getParty(), curCand.getBallotCount());
+
+        //table = new ArrayList[candidates.size()];
+
+        for(int i = 0; i < candidates.size(); i++) {
+            auditFileOutput.addCandidate(candidates.get(i).getCandidateName(), candidates.get(i).getParty(), candidates.get(i).getBallotCount());
+            //Add the name, party, and initial ballot count to the table
+//            table[i] = new ArrayList
+//            table[i].add(candidates.get(i).getCandidateName());
+//            table[i].add(candidates.get(i).getParty());
+//            table[i].add(candidates.get(i).getBallotCount());
         }
 
         //Start processing results
@@ -96,7 +110,21 @@ public class IRProcessing implements IElectionProcessing {
             } catch (IOException e) { throw new RuntimeException(e); }
             //redistributeBallots accordingly, removes losing candidate
             redistributeBallots(loser);
+            //Update table, some candidates may be removed. This double loop is sloppy.
+//            for(int i = 0; i < candidates.size(); i++) {
+//                for(int x = 0; x < table.length; x++) {
+//                    if(table[x].get(0).equals(candidates.get(i).getCandidateName())) {
+//                        table[x].add(candidates.get(i).getBallotCount());
+//                    }
+//                }
+//            }
         }
+
+//        for(ArrayList row : table) {
+//            for(Object entry : row) {
+//                System.out.println(entry + "\n");
+//            }
+//        }
         return "FAILURE";  //should never reach this point
     }
 
@@ -268,7 +296,7 @@ public class IRProcessing implements IElectionProcessing {
      * Accounts for lost ballots when there are no more rankings.
      * @param cand  the candidate whose votes will be redistributed
      */
-    public void redistributeBallots(Candidate cand){
+    public void redistributeBallots(Candidate cand) {
         //nextCand is used in for each loop
         String nextCand;
         for(Ballot curBallot: cand.getBallots()) {
@@ -281,9 +309,9 @@ public class IRProcessing implements IElectionProcessing {
                 totalNumBallots--;
             }
             else {
-                //TODO: check new candidate exists or update again
                 Boolean checkIfCandExists = false;
                 outer: while(checkIfCandExists == false) {
+                    //If the candidate's name is in candidates, they are still is in the running
                     for (Candidate curCand : candidates) {
                         if (curBallot.getNextCandidate() == curCand.getCandidateName()) {
                             checkIfCandExists = true;

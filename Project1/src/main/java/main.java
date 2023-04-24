@@ -65,6 +65,7 @@ public class main {
     private static boolean checkArgs(String fileName) throws IOException {
         String path = "Project1/" + fileName;
         File f = new File(path);
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
         //Check if the file exists
         if(f.exists()) {
             System.out.println("file exists!");

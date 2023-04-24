@@ -8,7 +8,6 @@
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -27,15 +26,26 @@ public class IRProcessing implements IElectionProcessing {
      * an integer that keeps track of the total number of ballots that were cast in an election.
      */
     int totalNumBallots = 0;
+
+    /**
+     * an integer to track the initial total number of ballots for the output table.
+     */
+    int initial_total = 0;
+
     /**
      * instantiates a ProcessResults instance, which is used to write election proceedings to an audit file.
      */
     ProcessResults auditFileOutput;
 
     /**
-     * an array of arrayLists, used for each row in the table outputted at the end of an election.
-     * each arrayList has in order: candidate, party, then the number of votes for each round.
+     * an arrayList of IRRows, used for each row in the table outputted at the end of an election.
      */
+    private ArrayList<IRRow> table;
+
+    /**
+     * an arrayList holding the number of lost/deleted ballots for every round.
+     */
+    private ArrayList<Integer> exhausted_pile;
 
     /**
      * Calls the setCandidates() and distributeBallots() to set up the processing of an IR
@@ -48,6 +58,8 @@ public class IRProcessing implements IElectionProcessing {
      */
     public IRProcessing(BufferedReader br) throws IOException {
         candidates = new ArrayList<>();
+        table = new ArrayList<>();
+        exhausted_pile = new ArrayList<>();
 
         //Create ProcessResults objects for sending info to the audit file
         auditFileOutput = new ProcessResults("IR");
@@ -63,15 +75,12 @@ public class IRProcessing implements IElectionProcessing {
             throw new RuntimeException(e);
         }
 
-        //table = new ArrayList[candidates.size()];
-
         for(int i = 0; i < candidates.size(); i++) {
             auditFileOutput.addCandidate(candidates.get(i).getCandidateName(), candidates.get(i).getParty(), candidates.get(i).getBallotCount());
             //Add the name, party, and initial ballot count to the table
-//            table[i] = new ArrayList
-//            table[i].add(candidates.get(i).getCandidateName());
-//            table[i].add(candidates.get(i).getParty());
-//            table[i].add(candidates.get(i).getBallotCount());
+            IRRow newRow = new IRRow(candidates.get(i).getCandidateName(), candidates.get(i).getParty());
+            newRow.add_stat(candidates.get(i).getBallotCount());
+            table.add(newRow);
         }
 
         //Start processing results
@@ -99,6 +108,7 @@ public class IRProcessing implements IElectionProcessing {
                         auditFileOutput.addWinner(curCand.getCandidateName(), curCand.getBallotCount());
                     } catch (IOException e) { throw new RuntimeException(e); }
                     System.out.println("----------WINNER: " + curCand.getCandidateName() + "----------");
+                    printTable();  //Print a table to terminal with election stats
                     return curCand.getCandidateName();  //currently return is not used
                 }
                 //do not need to account for the possibility of a two-way tie, handled in determineLoser
@@ -110,21 +120,19 @@ public class IRProcessing implements IElectionProcessing {
             } catch (IOException e) { throw new RuntimeException(e); }
             //redistributeBallots accordingly, removes losing candidate
             redistributeBallots(loser);
-            //Update table, some candidates may be removed. This double loop is sloppy.
-//            for(int i = 0; i < candidates.size(); i++) {
-//                for(int x = 0; x < table.length; x++) {
-//                    if(table[x].get(0).equals(candidates.get(i).getCandidateName())) {
-//                        table[x].add(candidates.get(i).getBallotCount());
-//                    }
-//                }
-//            }
-        }
 
-//        for(ArrayList row : table) {
-//            for(Object entry : row) {
-//                System.out.println(entry + "\n");
-//            }
-//        }
+            //Update table, some candidates may be removed so check if the candidate still exists.
+            for(int i = 0; i < candidates.size(); i++) {
+                String candName = candidates.get(i).getCandidateName();
+                //Check every row to find the candidate
+                for(int x = 0; x < table.size(); x++) {
+                    if(table.get(x).getCandName().equals(candName)) {
+                        int curNumBallots = candidates.get(i).getBallotCount();
+                        table.get(x).add_stat(curNumBallots);
+                    }
+                }
+            }
+        }
         return "FAILURE";  //should never reach this point
     }
 
@@ -247,6 +255,7 @@ public class IRProcessing implements IElectionProcessing {
             //Increment to the next ballot number
             ballotIndex++;
             totalNumBallots++;
+            initial_total++;
         }
     }
 
@@ -299,6 +308,7 @@ public class IRProcessing implements IElectionProcessing {
     public void redistributeBallots(Candidate cand) {
         //nextCand is used in for each loop
         String nextCand;
+        int numDeletedBallots = 0;
         for(Ballot curBallot: cand.getBallots()) {
             System.out.println("ballot " + curBallot.getIndex() + " : " + curBallot.getNumRankings());
             boolean updateBallotResult = curBallot.updateBallot(); //update ballot
@@ -306,6 +316,7 @@ public class IRProcessing implements IElectionProcessing {
                 //remove this ballot by ignoring it, once this candidate is deleted
                 //the ballots are destroyed by the garbage collector
                 System.out.println("REMOVED A BALLOT");
+                numDeletedBallots++;
                 totalNumBallots--;
             }
             else {
@@ -323,6 +334,7 @@ public class IRProcessing implements IElectionProcessing {
                         //remove this ballot by ignoring it, once this candidate is deleted
                         //the ballots are destroyed by the garbage collector
                         System.out.println("REMOVED A BALLOT - 2");
+                        numDeletedBallots++;
                         try {
                             auditFileOutput.removedBallot(curBallot.getIndex());
                         } catch (IOException e) { throw new RuntimeException(e); }
@@ -345,7 +357,54 @@ public class IRProcessing implements IElectionProcessing {
         //FIXME: possible issue with using loose equality within remove, removing first instance of this candidate
         //todo: may need to get this candidate's name and manually remove from candidates with for loop
         System.out.println("removed candidate: " + cand.getCandidateName());
+        exhausted_pile.add(numDeletedBallots);
         candidates.remove(cand);
+    }
+
+    private void printTable() {
+        int maxCols = 0;
+        String alignment1 = "| %-14s | %-14s |";
+        String alignment2 = " %-5d | %-5d |";
+        System.out.format("-*--------------+----------------*+---------------+%n");
+        System.out.format("|           Candidates            | 1st round     |%n");
+        System.out.format("-*--------------+---------------*+---------------+%n");
+        System.out.format("| Candidates    | Party           | Votes |  +/-  |%n");
+        System.out.format("-*--------------+----------------*+-------+-------+%n");
+        //TODO: get the maximum num of cols, add nth round labeled "Round n"
+        //TODO (low-priority): add +/- labels
+        //TODO (low-priority): add roofs were needed on the rows
+        for(int i = 0; i < table.size(); i++) {
+            int tempMaxCols = 0;
+            IRRow row = table.get(i);
+            ArrayList<Integer> temp = row.get_stats();
+            System.out.format(alignment1, row.getCandName(), row.getCandParty());
+            int prev = 0;
+            for(Integer num : temp) {
+                System.out.format(alignment2, num, num - prev);
+                prev = num;
+                tempMaxCols++;
+            }
+            System.out.format("%n");
+            System.out.format("-*---------------+---------------*+");
+            for(int x = 0; x < row.get_length(); x++) {
+                System.out.format("-------+-------+");
+            }
+            System.out.format("%n");
+            if(tempMaxCols > maxCols) maxCols = tempMaxCols;
+        }
+
+        System.out.format("| EXHAUSTED PILE |                |");
+        int prev = 0;
+        for(Integer num : exhausted_pile) {
+            System.out.format(alignment2, num, num - prev);
+            prev = num;
+        }
+        System.out.format("%n");
+        System.out.format("-*---------------+---------------*+-------+-------+%n");
+        System.out.format("| TOTALS         |                |");
+        System.out.format(alignment2, initial_total, initial_total);
+        System.out.format("%n");
+        System.out.format("-*---------------+---------------*+-------+-------+%n");
     }
 
 }

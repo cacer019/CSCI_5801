@@ -79,12 +79,23 @@ public class Ballot {
      *          after being updated.
      */
     public boolean updateBallot() {
-        candidates.remove(0);
-        this.numRankings--;
-        if (this.numRankings <= 0) {
+
+        if(this.numRankings > 1){
+            candidates.remove(0);
+            this.numRankings--;
+            return true;
+        }
+        else if (this.numRankings == 1) {
+            //if the ballot only has 1 ranking, then after removing the current candidate, it
+            //won't have any candidates to redistribute to, so it can be discarded.
+            candidates.remove(0);
+            this.numRankings--;
             return false;
         }
-        return true;
+        else {
+            return false;
+        }
+
     }
 
 

@@ -65,4 +65,25 @@ class BallotTest {
         assertEquals(blt5.getIndex(), 999);
     }
 
+    @Test
+    void updateBallotBugFixTest() {
+        ArrayList<String> cands = new ArrayList<String>();
+        cands.add("caleb");
+        cands.add("ashton");
+        Ballot blt1 = new Ballot(0, 2, cands);
+        assertEquals(blt1.getNumRankings(), 2);
+        assertEquals(blt1.updateBallot(), true);
+        assertEquals(blt1.getNumRankings(), 1);
+        assertEquals(blt1.updateBallot(), false);
+
+        ArrayList<String> cands2 = new ArrayList<String>();
+        cands2.add("ashton");
+        Ballot blt2 = new Ballot(1, 1, cands2);
+        assertEquals(blt2.updateBallot(), false);
+
+        ArrayList<String> cands3 = new ArrayList<String>();
+        Ballot blt3 = new Ballot(2, 0, cands2);
+        assertEquals(blt2.updateBallot(), false);
+    }
+
 }

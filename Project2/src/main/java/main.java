@@ -26,29 +26,24 @@ public class main {
         Boolean checkReturn;  //Used to determine if the current input it valid
         if(args.length == 0) {
             System.out.println("------Input filename from working directory. Format: 'FileName'.csv------");
-            String fileNames = getInput();
+            String[] fileNames = getInput();
             checkReturn = checkArgs(fileNames);
-        }
-        else if(args.length > 1) {  //More inputs than the filename were given
-            System.out.println("------Please only input the filename------");
-            checkReturn = false;
-        }
-        else {
-            //In the case only one input is provided
-            checkReturn = checkArgs(args[1]);
-            if (!checkReturn) {  //Check if the name is valid
-                System.out.println("------PROVIDED FILENAME IS INCORRECT------");
+            if (!checkReturn) {
+                for(int i = 0; i < 10; i++) {
+                    System.out.println("------INVALID FILENAME: Input filename from working directory. Format: 'FileName'.csv------");
+                    String[] files = getInput();
+                    checkReturn = checkArgs(files);
+                    if(checkReturn == true) {
+                        break;
+                    }
+                }
             }
         }
-
-        if (!checkReturn) {
-            for(int i = 0; i < 10; i++) {
-                System.out.println("------INVALID FILENAME: Input filename from working directory. Format: 'FileName'.csv------");
-                String fileNames = getInput();
-                checkReturn = checkArgs(fileNames);
-                if(checkReturn == true) {
-                    break;
-                }
+        else {
+            // In the case arguments are provided
+            checkReturn = checkArgs(args);
+            if (!checkReturn) {  //Check if the name is valid
+                System.out.println("------PROVIDED FILENAME IS INCORRECT------");
             }
         }
     }
@@ -62,12 +57,10 @@ public class main {
      * @return  a boolean, true if election was run, false if not.
      * @throws FileNotFoundException throws exception if file couldn't be found.
      */
-    private static boolean checkArgs(String fileNames) throws IOException {
+    private static boolean checkArgs(String[] fileNames) throws IOException {
         //String path = "Project2/" + fileName;  //Not needed if in Project2 dir
-        String[] filesArray = fileNames.split("\\s+");
-        for (int i = 0; i < filesArray.length; i++) {
-            System.out.println(filesArray[i]);
-            File f = new File(filesArray[i]);
+        for (int i = 0; i < fileNames.length; i++) {
+            File f = new File(fileNames[i]);
             if(f.exists()) {
                 System.out.println("file " + f + " exists!");
             } else {
@@ -83,7 +76,7 @@ public class main {
         //File file = new File(".");
         //for(String fileNames : file.list()) System.out.println(fileNames);
 
-        FileReader csvFile = new FileReader(filesArray[0]);
+        FileReader csvFile = new FileReader(fileNames[0]);
         //If file cannot be found, throw an exception.
         //Extract the election type from the CSV file (first line)
         String electionType;
@@ -91,7 +84,7 @@ public class main {
         try {
             electionType = myReader.readLine();
         } catch (Exception e) {
-            System.out.println("File cannot be found.\nFile-name provided: " + filesArray[0]);
+            System.out.println("File cannot be found.\nFile-name provided: " + fileNames[0]);
             throw new RuntimeException(e);
         }
 
@@ -112,15 +105,16 @@ public class main {
     }
 
     /**
-     * Reads user input from command line to get fileame.
+     * Reads user input from command line to get filename.
      * @return  name of file input by user as a String.
      * @throws IOException  when IO error occurs.
      */
-    private static String getInput() throws IOException {
+    private static String[] getInput() throws IOException {
         //Read the user input from terminal
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
         String files = inputReader.readLine();
-        return files;
+        String[] filesArray = files.split("\\s+");
+        return filesArray;
     }
 
 

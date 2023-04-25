@@ -26,8 +26,8 @@ public class main {
         Boolean checkReturn;  //Used to determine if the current input it valid
         if(args.length == 0) {
             System.out.println("------Input filename from working directory. Format: 'FileName'.csv------");
-            String fileName = getInput();
-            checkReturn = checkArgs(fileName);
+            String fileNames = getInput();
+            checkReturn = checkArgs(fileNames);
         }
         else if(args.length > 1) {  //More inputs than the filename were given
             System.out.println("------Please only input the filename------");
@@ -44,8 +44,8 @@ public class main {
         if (!checkReturn) {
             for(int i = 0; i < 10; i++) {
                 System.out.println("------INVALID FILENAME: Input filename from working directory. Format: 'FileName'.csv------");
-                String fileName = getInput();
-                checkReturn = checkArgs(fileName);
+                String fileNames = getInput();
+                checkReturn = checkArgs(fileNames);
                 if(checkReturn == true) {
                     break;
                 }
@@ -58,13 +58,23 @@ public class main {
      * Checks if input file can't be found.
      * Calls CPLProcessing.processElection() if election is CPL.
      * Calls IRProcessing.processElection() if election is IR.
-     * @param fileName  name of election information file given by user.
+     * @param fileNames  name of election information files given by user.
      * @return  a boolean, true if election was run, false if not.
      * @throws FileNotFoundException throws exception if file couldn't be found.
      */
-    private static boolean checkArgs(String fileName) throws IOException {
+    private static boolean checkArgs(String fileNames) throws IOException {
         //String path = "Project2/" + fileName;  //Not needed if in Project2 dir
-        File f = new File(fileName);
+        String[] filesArray = fileNames.split("\\s+");
+        for (int i = 0; i < filesArray.length; i++) {
+            System.out.println(filesArray[i]);
+            File f = new File(filesArray[i]);
+            if(f.exists()) {
+                System.out.println("file " + f + " exists!");
+            } else {
+                System.out.println("file " + f + " does not exist!");
+                return false;
+            }
+        }
 
         //Debugging for finding file name
         //System.out.println("Working Directory: " + System.getProperty("user.dir"));
@@ -73,15 +83,7 @@ public class main {
         //File file = new File(".");
         //for(String fileNames : file.list()) System.out.println(fileNames);
 
-        //Check if the file exists
-        if(f.exists()) {
-            System.out.println("file exists!");
-        }
-        else {
-            System.out.println("file does not exist!");
-            return false;
-        }
-        FileReader csvFile = new FileReader(fileName);
+        FileReader csvFile = new FileReader(filesArray[0]);
         //If file cannot be found, throw an exception.
         //Extract the election type from the CSV file (first line)
         String electionType;
@@ -89,7 +91,7 @@ public class main {
         try {
             electionType = myReader.readLine();
         } catch (Exception e) {
-            System.out.println("File cannot be found.\nFile-name provided: " + fileName);
+            System.out.println("File cannot be found.\nFile-name provided: " + filesArray[0]);
             throw new RuntimeException(e);
         }
 
@@ -117,9 +119,8 @@ public class main {
     private static String getInput() throws IOException {
         //Read the user input from terminal
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-        String file = inputReader.readLine();
-        //System.out.println("filename: " + file);  //debugging
-        return file;
+        String files = inputReader.readLine();
+        return files;
     }
 
 

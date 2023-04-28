@@ -98,7 +98,7 @@ public class main {
         else if (electionType.equals("IR")) {
             //runs processElection() in the constructor
             System.out.println("------Running Instant Runoff Vote Election------");
-            IRProcessing IRElection = new IRProcessing(myReader);
+            //IRProcessing IRElection = new IRProcessing(myReader);
             return true;
         }
         return false;

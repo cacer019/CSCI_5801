@@ -48,15 +48,21 @@ public class IRProcessing implements IElectionProcessing {
     private ArrayList<Integer> exhausted_pile;
 
     /**
+     * an int used to keep track of the current ballot index for distributing ballots from multiple files
+     */
+    int curBallotIndex;
+
+    /**
      * Calls the setCandidates() and distributeBallots() to set up the processing of an IR
      * election and then calls processElection() to process the election.
      * Writes to audit file information about election proceedings.
-     * @param br  a BufferedReader, buffers the input from a FileReader that is reading
-     *            from the election information csv file
+     * @param brs  a BufferedReader Array, holds buffered readers that each buffer the input from a FileReader
+     *             that is reading from an election information csv file
      * @throws IOException  throws an IOException if distributeBallots() throws an IOException
      *                      when called
      */
-    public IRProcessing(BufferedReader br) throws IOException {
+    public IRProcessing(BufferedReader[] brs) throws IOException {
+        curBallotIndex = 0;
         candidates = new ArrayList<>();
         table = new ArrayList<>();
         exhausted_pile = new ArrayList<>();
@@ -66,15 +72,26 @@ public class IRProcessing implements IElectionProcessing {
         auditFileOutput.addVotingType("Instant-Runoff");
 
         //Create candidates for candidates class variable
-        setCandidates(br);
-
-        //Try to distribute the ballots, then add candidate info to the audit file
+        //Only need to call on one file
+        setCandidates(brs[0]);
+//
+        //Try to distribute the ballots, need to call on all files
         try {
-            distributeBallots(br);
+            distributeBallots(brs[0]);
+            for(int i = 1; i < brs.length; i++){
+                //need to skip first three lines of files that weren't used in setCandidates()
+                brs[i].readLine();
+                brs[i].readLine();
+                brs[i].readLine();
+                distributeBallots(brs[i]);
+
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+
+        //Add candidate info to the audit file
         for(int i = 0; i < candidates.size(); i++) {
             auditFileOutput.addCandidate(candidates.get(i).getCandidateName(), candidates.get(i).getParty(), candidates.get(i).getBallotCount());
             //Add the name, party, and initial ballot count to the table
@@ -218,7 +235,7 @@ public class IRProcessing implements IElectionProcessing {
         //Get the 4th line of the CSV file
         String nextLine = br.readLine();
         int ballotCount = Integer.parseInt(nextLine);
-        int ballotIndex = 0;
+        //int ballotIndex = 0;
         //System.out.println("Read: " + ballotCount);  //debugging
 
         //Loop through all the lines to create each individual ballot, O(2) time
@@ -243,7 +260,7 @@ public class IRProcessing implements IElectionProcessing {
             //Create the new ballot
             //System.out.println("ballotIndex: " + ballotIndex);  //debugging
             //System.out.println("curNumRankings: " + curNumRankings);  //debugging
-            Ballot tempBallot = new Ballot(ballotIndex, curNumRankings, tempRankings);
+            Ballot tempBallot = new Ballot(curBallotIndex, curNumRankings, tempRankings);
             //Need to add this Ballot to it's first choice's Ballots
             String candidateToFind = tempBallot.getNextCandidate();
             for (Candidate curCand : candidates) {
@@ -253,7 +270,7 @@ public class IRProcessing implements IElectionProcessing {
             }
             //curCand.get(i).addBallot(tempBallot);
             //Increment to the next ballot number
-            ballotIndex++;
+            curBallotIndex++;
             totalNumBallots++;
             initial_total++;
         }

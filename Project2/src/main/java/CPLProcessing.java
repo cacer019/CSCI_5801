@@ -45,16 +45,25 @@ public class CPLProcessing implements IElectionProcessing {
      * This is the constructor of a CPLProcessing object. It requires a location to the CPL election file. When this
      * constructor is called the processing of a CPL election as a whole is executed.
      *
-     * @param br Input stream of CPL election ballot file used to read parties in election.
+     * @param brs Input stream of CPL election ballot files used to read parties in election.
      * @throws IOException Throws IOException with null as its error detail message.
      */
-    public CPLProcessing(BufferedReader br) throws IOException {
+    public CPLProcessing(BufferedReader[] brs) throws IOException {
         auditFileOutput = new ProcessResults("CPL");
         auditFileOutput.addVotingType("Closed-Party-List");
         this.parties = new ArrayList<>();
-        setParties(br);
+        //Only need to call on one file to set parties
+        setParties(brs[0]);
         try {
-            distributeBallots(br, this.parties);
+            distributeBallots(brs[0], this.parties);
+            for (int i = 1; i < brs.length; i++) {
+                // Skips first lines containing election type, number of parties, party names, and candidates.
+                brs[i].readLine();
+                int numParties = Integer.parseInt(brs[i].readLine());
+                for (int j = 0; j < numParties + 1; j++) {
+                    brs[i].readLine();
+                }
+            }
             distributeSeats();
         } catch (IOException e) {
             throw new RuntimeException(e);

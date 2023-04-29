@@ -88,17 +88,24 @@ public class main {
             throw new RuntimeException(e);
         }
 
+        BufferedReader[] electionFiles = new BufferedReader[fileNames.length];
+        for (int i = 0; i < electionFiles.length; i++) {
+            csvFile = new FileReader(fileNames[i]);
+            myReader = new BufferedReader(csvFile);
+            electionFiles[i] = myReader;
+        }
+
         //Create a processing class object accordingly and pass on the BufferedReader object
         if (electionType.equals("CPL")) {
             //runs processElection() in the constructor
             System.out.println("------Running Closed Party List Election------");
-            CPLProcessing CPLElection = new CPLProcessing(myReader);
+            CPLProcessing CPLElection = new CPLProcessing(electionFiles);
             return true;
         }
         else if (electionType.equals("IR")) {
             //runs processElection() in the constructor
             System.out.println("------Running Instant Runoff Vote Election------");
-            //IRProcessing IRElection = new IRProcessing(myReader);
+            IRProcessing IRElection = new IRProcessing(electionFiles);
             return true;
         }
         return false;

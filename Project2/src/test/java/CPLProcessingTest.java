@@ -27,12 +27,14 @@ class CPLProcessingTest {
         FileReader csvFile1 = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br1 = new BufferedReader(csvFile1);
+        BufferedReader[] brs = new BufferedReader[1];
+        brs[0] = br1;
         try {
             br1.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election1 = new CPLProcessing(br1);
+        CPLProcessing election1 = new CPLProcessing(brs);
 
         assertEquals(election1.getParties().get(0).getNumSeats(), 1);
         assertEquals(election1.getParties().get(1).getNumSeats(), 1);
@@ -44,12 +46,13 @@ class CPLProcessingTest {
         FileReader csvFile2 = new FileReader("src/test/java/CPLTesting2.csv");
 
         BufferedReader br2 = new BufferedReader(csvFile2);
+        brs[0] = br2;
         try {
             br2.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election2 = new CPLProcessing(br2);
+        CPLProcessing election2 = new CPLProcessing(brs);
 
         assertEquals(election2.getParties().get(0).getNumSeats(), 1);
         assertEquals(election2.getParties().get(1).getNumSeats(), 0);
@@ -69,12 +72,14 @@ class CPLProcessingTest {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
+        BufferedReader[] brs = new BufferedReader[1];
+        brs[0] = br;
         try {
             br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election = new CPLProcessing(br);     //setParties() called
+        CPLProcessing election = new CPLProcessing(brs);     //setParties() called
 
         ArrayList<Party> parts = election.getParties();     //check if parties are all correct
         ArrayList<String> cands = new ArrayList<>();
@@ -126,12 +131,14 @@ class CPLProcessingTest {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
+        BufferedReader[] brs = new BufferedReader[1];
+        brs[0] = br;
         try {
             br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election = new CPLProcessing(br);
+        CPLProcessing election = new CPLProcessing(brs);
 
         assertEquals(election.getParties().get(0).getBallotCount(), 3);
         assertEquals(election.getParties().get(1).getBallotCount(), 2);
@@ -151,12 +158,14 @@ class CPLProcessingTest {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
+        BufferedReader[] brs = new BufferedReader[1];
+        brs[0] = br;
         try {
             br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election = new CPLProcessing(br);
+        CPLProcessing election = new CPLProcessing(brs);
 
         assertEquals("Foster,Green,McClure,", election.processElection());
 
@@ -172,12 +181,14 @@ class CPLProcessingTest {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
+        BufferedReader[] brs = new BufferedReader[1];
+        brs[0] = br;
         try {
             br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election = new CPLProcessing(br);
+        CPLProcessing election = new CPLProcessing(brs);
 
 
         String[] candidates = election.getCandidates();
@@ -207,12 +218,14 @@ class CPLProcessingTest {
         FileReader csvFile = new FileReader("src/test/java/CPLTesting1.csv");
 
         BufferedReader br = new BufferedReader(csvFile);
+        BufferedReader[] brs = new BufferedReader[1];
+        brs[0] = br;
         try {
             br.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        CPLProcessing election = new CPLProcessing(br);
+        CPLProcessing election = new CPLProcessing(brs);
 
         ArrayList<Party> parties = election.getParties();
         assertEquals("Democratic", parties.get(0).getParty());

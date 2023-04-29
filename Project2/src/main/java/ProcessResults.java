@@ -197,7 +197,7 @@ public class ProcessResults {
         FileWriter fw = new FileWriter(auditFile.getName(),true);
         BufferedWriter bw = new BufferedWriter(fw);
         bw.write("TIED PARTIES:\n+++ " + tiedParties);
-        bw.write("WINNER OF TIE: " + chosenWinner);
+        bw.write("\nWINNER OF TIE: " + chosenWinner);
         bw.write("\n\n\n");
         bw.close();
     }

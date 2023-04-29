@@ -116,7 +116,8 @@ public class CPLProcessing implements IElectionProcessing {
                 this.parties.get(chosenIndex).setNumSeats(this.parties.get(chosenIndex).getNumSeats() + 1);
                 String tiedCandidates = "";
                 for(int i = 0; i < tiedIndexes.size(); i++){
-                    tiedCandidates = tiedCandidates + tiedIndexes.get(i) + " ";
+                    int partyIndex = tiedIndexes.get(i);
+                    tiedCandidates = tiedCandidates + this.parties.get(partyIndex).getParty() + ", ";
                 }
                 auditFileOutput.addTie(tiedCandidates, this.parties.get(chosenIndex).getParty());
                 remainders.set(chosenIndex, 0);

@@ -19,6 +19,7 @@ public class MainTest {
     @Test
     void getFilesIR() {
         assertDoesNotThrow(() -> main.main(new String[]{"src/test/java/IRTesting5.csv", "src/test/java/IRTesting6.csv"}));
+        assertDoesNotThrow(() -> main.main(new String[]{"src/test/java/IRTesting5.csv"}));
     }
 
     /**
@@ -26,7 +27,7 @@ public class MainTest {
      */
     @Test
     void getFilesCPL() {
-        assertDoesNotThrow(() -> main.main(new String[]{"src/test/java/CPLTesting3.csv"}));
+        assertDoesNotThrow(() -> main.main(new String[]{"src/test/java/CPLTesting3.csv", "src/test/java/CPLTesting4.csv"}));
         assertDoesNotThrow(() -> main.main(new String[]{"src/test/java/CPLTesting4.csv"}));
     }
 

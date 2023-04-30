@@ -211,7 +211,7 @@ class CPLProcessingTest {
         }
 
         CPLProcessing election2 = new CPLProcessing(brs2);
-        ArrayList<Party> parts2 = election.getParties();     //check if parties are all correct
+        ArrayList<Party> parts2 = election2.getParties();     //check if parties are all correct
         ArrayList<String> cands2 = new ArrayList<>();
         cands2.add("Foster");
         cands2.add("Volz");

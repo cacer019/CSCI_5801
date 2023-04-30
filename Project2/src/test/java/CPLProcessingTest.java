@@ -55,12 +55,12 @@ class CPLProcessingTest {
         }
         CPLProcessing election2 = new CPLProcessing(brs);
 
-        assertEquals(election2.getParties().get(0).getNumSeats(), 1);
+        assertEquals(election2.getParties().get(0).getNumSeats(), 2);
         assertEquals(election2.getParties().get(1).getNumSeats(), 0);
         assertEquals(election2.getParties().get(2).getNumSeats(), 0);
         assertEquals(election2.getParties().get(3).getNumSeats(), 1);
         assertEquals(election2.getParties().get(4).getNumSeats(), 0);
-        assertEquals(election2.getParties().get(5).getNumSeats(), 1);
+        assertEquals(election2.getParties().get(5).getNumSeats(), 0);
 
         FileReader csvFile3 = new FileReader("src/test/java/CPLTesting1.csv");
         FileReader csvFile4 = new FileReader("src/test/java/CPLTesting2.csv");
@@ -320,12 +320,12 @@ class CPLProcessingTest {
 
         CPLProcessing election2 = new CPLProcessing(brs2);
 
-        assertEquals(election2.getParties().get(0).getBallotCount(), 3);
-        assertEquals(election2.getParties().get(1).getBallotCount(), 2);
+        assertEquals(election2.getParties().get(0).getBallotCount(), 15);
+        assertEquals(election2.getParties().get(1).getBallotCount(), 6);
         assertEquals(election2.getParties().get(2).getBallotCount(), 0);
-        assertEquals(election2.getParties().get(3).getBallotCount(), 2);
-        assertEquals(election2.getParties().get(4).getBallotCount(), 1);
-        assertEquals(election2.getParties().get(5).getBallotCount(), 1);
+        assertEquals(election2.getParties().get(3).getBallotCount(), 10);
+        assertEquals(election2.getParties().get(4).getBallotCount(), 4);
+        assertEquals(election2.getParties().get(5).getBallotCount(), 5);
 
     }
 

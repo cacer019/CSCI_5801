@@ -35,7 +35,7 @@ public class CPLProcessing implements IElectionProcessing {
     /**
      * the total number of ballots that were cast in the election as an int
      */
-    private int numBallots;
+    private int numBallots = 0;
     /**
      * the total number of candidates participating in the election
      */
@@ -62,6 +62,7 @@ public class CPLProcessing implements IElectionProcessing {
                 for (int j = 0; j < numParties + 1; j++) {
                     brs[i].readLine();
                 }
+                distributeBallots(brs[i], this.parties);
             }
             distributeSeats();
         } catch (IOException e) {
@@ -183,10 +184,10 @@ public class CPLProcessing implements IElectionProcessing {
 
         // Reads number of ballots that were submitted
         int numBallots = Integer.parseInt(br.readLine());
-        setNumBallots(numBallots);
+        setNumBallots(getNumBallots() + numBallots);
 
         // Iterate through each line and look for ballot vote position
-        for(int i = 0; i < getNumBallots(); i++){
+        for(int i = 0; i < numBallots; i++){
 
             // Go char by char for each ballot make string 1st
             String currentBallot = br.readLine();

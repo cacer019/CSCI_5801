@@ -92,6 +92,8 @@ public class main {
         for (int i = 0; i < electionFiles.length; i++) {
             csvFile = new FileReader(fileNames[i]);
             myReader = new BufferedReader(csvFile);
+            //Skips over election type
+            myReader.readLine();
             electionFiles[i] = myReader;
         }
 

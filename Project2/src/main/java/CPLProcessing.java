@@ -57,8 +57,7 @@ public class CPLProcessing implements IElectionProcessing {
         try {
             distributeBallots(brs[0], this.parties);
             for (int i = 1; i < brs.length; i++) {
-                // Skips first lines containing election type, number of parties, party names, and candidates.
-                brs[i].readLine();
+                // Skips first lines containing number of parties, party names, and candidates.
                 int numParties = Integer.parseInt(brs[i].readLine());
                 for (int j = 0; j < numParties + 1; j++) {
                     brs[i].readLine();

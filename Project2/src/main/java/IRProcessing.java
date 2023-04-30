@@ -234,6 +234,7 @@ public class IRProcessing implements IElectionProcessing {
     private void distributeBallots(BufferedReader br) throws IOException {
         //Get the 4th line of the CSV file
         String nextLine = br.readLine();
+        //System.out.println("NUMBALLOTS: " + nextLine);
         int ballotCount = Integer.parseInt(nextLine);
         //int ballotIndex = 0;
         //System.out.println("Read: " + ballotCount);  //debugging
@@ -371,57 +372,92 @@ public class IRProcessing implements IElectionProcessing {
                 }
             }
         }
-        //FIXME: possible issue with using loose equality within remove, removing first instance of this candidate
-        //todo: may need to get this candidate's name and manually remove from candidates with for loop
-        System.out.println("removed candidate: " + cand.getCandidateName());
+        System.out.println("Removed candidate: " + cand.getCandidateName());
         exhausted_pile.add(numDeletedBallots);
         candidates.remove(cand);
     }
 
+    /**
+     * Uses the table instance variable to populate and prints a table
+     * containing election information for each round. Takes no parameters
+     * and returns nothing.
+     */
     private void printTable() {
-        int maxCols = 0;
+        int maxCols = 0;  // Number of rounds
+
+        // Record the number of rounds
+        for(int i = 0; i < table.size(); i++) {
+            IRRow row = table.get(i);
+            ArrayList<Integer> stats = row.get_stats();
+            if(maxCols < stats.size()) {
+                maxCols = stats.size();
+            }
+        }
+
+        // Format strings for table rows
         String alignment1 = "| %-14s | %-14s |";
         String alignment2 = " %-5d | %-5d |";
-        System.out.format("-*--------------+----------------*+---------------+%n");
-        System.out.format("|           Candidates            | 1st round     |%n");
-        System.out.format("-*--------------+---------------*+---------------+%n");
-        System.out.format("| Candidates    | Party           | Votes |  +/-  |%n");
-        System.out.format("-*--------------+----------------*+-------+-------+%n");
-        //TODO: get the maximum num of cols, add nth round labeled "Round n"
-        //TODO (low-priority): add +/- labels
-        //TODO (low-priority): add roofs were needed on the rows
+        String posAlignment2 = " %-5d | +%-4d |";
+        String negAlignment2 = " %-5d | -%-4d |";
+
+        // Print the table headers
+        System.out.format("-*--------------+----------------*+");
+        for(int i = 0; i < maxCols; i++) {
+            System.out.format("---------------+");
+        }
+        System.out.format("%n|           Candidates            |");
+        for(int i = 0; i < maxCols; i++) {
+            System.out.format(" round %d       |", (i + 1));
+        }
+        System.out.format("%n-*--------------+----------------*+");
+        for(int i = 0; i < maxCols; i++) {
+            System.out.format("---------------+");
+        }
+        System.out.format("%n| Candidates    | Party           |");
+        for(int i = 0; i < maxCols; i++) {
+            System.out.format(" Votes |  +/-  |");
+        }
+        System.out.format("%n-*--------------+----------------*+");
+        for(int i = 0; i < maxCols; i++) {
+            System.out.format("---------------+");
+        }
+        System.out.format("%n");
+
+        // Print round information
         for(int i = 0; i < table.size(); i++) {
-            int tempMaxCols = 0;
             IRRow row = table.get(i);
             ArrayList<Integer> temp = row.get_stats();
             System.out.format(alignment1, row.getCandName(), row.getCandParty());
             int prev = 0;
             for(Integer num : temp) {
-                System.out.format(alignment2, num, num - prev);
+                int countChange = num - prev;
+                if(countChange < 0) {
+                    System.out.format(negAlignment2, num, countChange);
+                }
+                else System.out.format(posAlignment2, num, countChange);
                 prev = num;
-                tempMaxCols++;
+            }
+            System.out.format("%n-*--------------+----------------*+");
+            for(int x = 0; x < maxCols; x++) {
+                System.out.format("---------------+");
             }
             System.out.format("%n");
-            System.out.format("-*---------------+---------------*+");
-            for(int x = 0; x < row.get_length(); x++) {
-                System.out.format("-------+-------+");
-            }
-            System.out.format("%n");
-            if(tempMaxCols > maxCols) maxCols = tempMaxCols;
         }
 
+        // Print table footers
         System.out.format("| EXHAUSTED PILE |                |");
         int prev = 0;
         for(Integer num : exhausted_pile) {
-            System.out.format(alignment2, num, num - prev);
+            System.out.format(posAlignment2, num, num - prev);
             prev = num;
         }
-        System.out.format("%n");
-        System.out.format("-*---------------+---------------*+-------+-------+%n");
-        System.out.format("| TOTALS         |                |");
+        System.out.format("%n-*--------------+----------------*+");
+        for(int x = 0; x < maxCols; x++) {
+            System.out.format("---------------+");
+        }
+        System.out.format("%n| TOTALS         |                |");
         System.out.format(alignment2, initial_total, initial_total);
         System.out.format("%n");
         System.out.format("-*---------------+---------------*+-------+-------+%n");
     }
-
 }

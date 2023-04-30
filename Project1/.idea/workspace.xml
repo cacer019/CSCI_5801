@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f2383107-ff5c-46a9-837c-4191d713a357" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/auditFile-IR-04-23-2023.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/auditFile-IR-04-23-2023.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Project2/src/main/java/IRProcessing.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Project2/src/main/java/IRProcessing.java" afterDir="false" />
-    </list>
+    <list default="true" id="f2383107-ff5c-46a9-837c-4191d713a357" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

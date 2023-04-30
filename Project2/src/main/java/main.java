@@ -83,7 +83,7 @@ public class main {
         BufferedReader myReader = new BufferedReader(csvFile);
         try {
             electionType = myReader.readLine();
-            //for(char c : electionType.toCharArray()) System.out.print(c);
+            //for(char c : electionType.toCharArray()) System.out.print((int)c + "\n");  //debugging
         } catch (Exception e) {
             System.out.println("File cannot be found.\nFile-name provided: " + fileNames[0]);
             throw new RuntimeException(e);

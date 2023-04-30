@@ -80,7 +80,7 @@ public class IRProcessing implements IElectionProcessing {
             distributeBallots(brs[0]);
             for(int i = 1; i < brs.length; i++){
                 //need to skip first three lines of files that weren't used in setCandidates()
-                brs[i].readLine();
+                //brs[i].readLine();
                 brs[i].readLine();
                 brs[i].readLine();
                 distributeBallots(brs[i]);

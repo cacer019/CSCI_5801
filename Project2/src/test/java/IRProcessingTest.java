@@ -165,6 +165,7 @@ class IRProcessingTest {
 
         try {
             brs[0].readLine();
+            brs[1].readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -206,6 +207,7 @@ class IRProcessingTest {
 
         try {
             brs[0].readLine();
+            brs[1].readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -246,6 +248,8 @@ class IRProcessingTest {
 
         try {
             brs[0].readLine();
+            brs[1].readLine();
+            brs[2].readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

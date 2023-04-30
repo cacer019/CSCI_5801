@@ -9,6 +9,12 @@ have package declarations.
 SDK version is 17.
 This project uses Gradle library manager.
 
+### Running Elections
+Users can run elections with a single CSV file or multiple of them. 
+To run a single election the user just types in the individual file. For example, "CPLElection1.csv".
+To run multiple files the user should then add a space from the first inputted election file and continue as so for more. 
+For example, "CPLElection1.csv CPLElection2.csv CPLElection3.csv"
+
 ### Project Structure (test and source files in new location)
 Project structure differs from expected team directory structure. Rather than a src
 and testing subdirectory underneath the Project2 directory, src contains main

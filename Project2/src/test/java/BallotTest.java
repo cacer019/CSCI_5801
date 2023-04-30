@@ -65,6 +65,9 @@ class BallotTest {
         assertEquals(blt5.getIndex(), 999);
     }
 
+    /**
+     * Tests to ensure the ballot bug was corrected.
+     */
     @Test
     void updateBallotBugFixTest() {
         ArrayList<String> cands = new ArrayList<String>();

@@ -40,6 +40,10 @@ public class CPLProcessing implements IElectionProcessing {
      * the total number of candidates participating in the election
      */
     private int numCandidates;
+
+    /**
+     * auditFileOutput object for generating an audit file.
+     */
     ProcessResults auditFileOutput;
     /**
      * This is the constructor of a CPLProcessing object. It requires a location to the CPL election file. When this
@@ -73,9 +77,11 @@ public class CPLProcessing implements IElectionProcessing {
         }
         processElection();
     }
+
     /**
      * The distributeSeats method goes through each party in the election and allocates seats to each party according
      * to the calculated vote quota. This method also handles ties in a fair manner through random number generation.
+     * @throws IOException File reading failure
      */
     private void distributeSeats() throws IOException {
         // Calculates quota by dividing number of seats by the number of ballots.

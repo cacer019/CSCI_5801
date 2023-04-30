@@ -83,6 +83,7 @@ public class main {
         BufferedReader myReader = new BufferedReader(csvFile);
         try {
             electionType = myReader.readLine();
+            //for(char c : electionType.toCharArray()) System.out.print(c);
         } catch (Exception e) {
             System.out.println("File cannot be found.\nFile-name provided: " + fileNames[0]);
             throw new RuntimeException(e);
@@ -108,6 +109,12 @@ public class main {
             //runs processElection() in the constructor
             System.out.println("------Running Instant Runoff Vote Election------");
             IRProcessing IRElection = new IRProcessing(electionFiles);
+            return true;
+        }
+        else if (electionType.equals("PO")) {
+            //runs processElection() in the constructor
+            System.out.println("------Running Popularity Only Vote Election------");
+            POProcessing OPElection = new POProcessing(electionFiles[0]);
             return true;
         }
         return false;

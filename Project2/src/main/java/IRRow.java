@@ -8,6 +8,9 @@
 
 import java.util.ArrayList;
 
+/**
+ * Class for holding IR table data for each candidate.
+ */
 public class IRRow {
 
     /**

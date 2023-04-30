@@ -117,7 +117,7 @@ public class POProcessing implements IElectionProcessing{
 
     /**
      * Reads from the election information CSV file to determine the candidates and parties and add
-     * them to ArrayList<String> candidates ArrayList<String> candidateParties.
+     * them to a String ArrayList candidates and String ArrayList candidateParties.
      * @param br a BufferedReader, buffers the input from a FileReader that is reading
      *           from the election information csv file.
      * @throws RuntimeException  throws a RuntimeException if attempting to read from the
@@ -204,16 +204,16 @@ public class POProcessing implements IElectionProcessing{
     }
 
     /**
-     * Used to get the names of the candidates in the election, as an ArrayList<String>.
-     * @return  candidates, the ArrayList<String> containing the names of the candidates in the election.
+     * Used to get the names of the candidates in the election, as a String ArrayList.
+     * @return  candidates, the String ArrayList containing the names of the candidates in the election.
      */
     public ArrayList<String> getCandidatesArrayList(){
         return candidates;
     }
 
     /**
-     * Used to get the parties involved in the election, as an ArrayList<String>.
-     * @return  candidateParties, the ArrayList<String> containing the names of the parties in the election
+     * Used to get the parties involved in the election, as a String ArrayList.
+     * @return  candidateParties, the String ArrayList containing the names of the parties in the election
      */
     public ArrayList<String> getCandidateParties(){
         return candidateParties;
